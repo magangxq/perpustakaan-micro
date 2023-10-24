@@ -73,3 +73,39 @@ books/
 - DEL delete book *(Dev, Admin, Pust)*        : menghapus buku
 
 ```
+
+## folder tree
+```
+perpustakaan - backend/
+├── config
+│   └── Database.js
+├── controllers
+│   ├── Applicant.js
+│   ├── Auth.js
+│   ├── Books.js
+│   ├── Profile.js
+│   └── Users.js
+├── middleware
+│   └── AuthUser.js
+├── models
+│   ├── BookModel.js
+│   └── UserModel.js
+├── node_modules
+├── prisma
+│   ├── schema.prisma
+│   ├── seedBook.js
+│   └── seedUser.js
+└── routes
+│   ├── ApplicantRoute.js
+│   ├── AuthRoute.js
+│   ├── BookRoute.js
+│   ├── ProfileRoute.js
+│   └── UserRoute.js
+├── .env
+├── .env.dev
+├── .gitignore
+├── index.js
+├── package-lock.json
+├── package.json
+├── README.md
+```
