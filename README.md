@@ -1,6 +1,6 @@
 **Perpustakaan**
 
-## configuration steps
+# configuration steps
 1. [install dependencies](#dependencies-installation)
 2. create your database in postgresql then config the database at /config/Database.js
 ```
