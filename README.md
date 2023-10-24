@@ -44,7 +44,7 @@ npx nodemon run
 
 ## api method
 ```
-api method
+api method 
 
 auth/
 - POST register *(All Role)*                  : register user
