@@ -47,7 +47,7 @@ npx nodemon run
 api method
 
 auth/
-- POST register `(All Role)`                  : register user
+POST register `(All Role)`                  : register user
 - POST login *(All Role)*                     : login user
 - DEL logout *(All Role)*                     : logout user
 
