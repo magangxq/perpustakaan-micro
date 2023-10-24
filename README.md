@@ -95,7 +95,7 @@ perpustakaan - backend/
 │   ├── schema.prisma
 │   ├── seedBook.js
 │   └── seedUser.js
-└── routes
+├── routes
 │   ├── ApplicantRoute.js
 │   ├── AuthRoute.js
 │   ├── BookRoute.js
@@ -107,5 +107,5 @@ perpustakaan - backend/
 ├── index.js
 ├── package-lock.json
 ├── package.json
-├── README.md
+└── README.md
 ```
