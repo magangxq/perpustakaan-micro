@@ -5,10 +5,11 @@
   "type": "module",
   "main": "index.js",
   "prisma": {
-    "seed": "node prisma/seedUser.js"
+    "seed": "node prisma/seedBook.js && node prisma/seedUser.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "concurrently \"node prisma/seedBook.js\" \"node prisma/seedUser.js\""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
   "dependencies": {
     "@prisma/client": "^5.4.2",
     "argon2": "^0.28.7",
+    "concurrently": "^8.2.2",
     "connect-session-sequelize": "^7.1.4",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

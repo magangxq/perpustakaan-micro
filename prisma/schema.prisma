@@ -21,3 +21,16 @@ model users{
   createdAt DateTime
   updatedAt DateTime
 }
+
+model book{
+  id Int @id @default(autoincrement())
+  title String
+  author String
+  publisher String
+  publication_year DateTime @db.Date
+  description String
+  book_status String @default("tersedia")
+  information String?
+  createdAt DateTime
+  updatedAt DateTime
+}

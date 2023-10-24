@@ -10,7 +10,7 @@ const db = new Sequelize('yourdatabase', 'user', 'password', {
 });
 ```
 3. [migrate the data model](#migrate-data-model) 
-4. [migrate the seed ](#migrate-the-seeder)
+4. [migrate the seed](#migrate-the-seeder)
 5. [run the server](#run-server)
 
 ## dependencies installation
@@ -35,7 +35,7 @@ store.sync();
 ## migrate the seeder
 1. setup your database url in .env
 2. npx prisma generate
-3. npx prisma db seed
+3. npm run seed
 
 ## run server
 ```

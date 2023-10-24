@@ -115,7 +115,7 @@ async function main() {
         updatedAt: now
     },
   });
-  console.log("success create seed");
+  console.log("success create Users");
 }
 
 main()
