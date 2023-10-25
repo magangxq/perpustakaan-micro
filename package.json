@@ -8,14 +8,17 @@
     "seed": "node prisma/seedBook.js && node prisma/seedUser.js"
   },
   "scripts": {
+    "migrate-model": "\"node models/MigrateModel.js\" && exit",
+    "generate": "prisma generate",
+    "start": "nodemon run",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "concurrently \"node prisma/seedBook.js\" \"node prisma/seedUser.js\""
+    "seeder": "concurrently \"node prisma/seedBook.js\" \"node prisma/seedUser.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.5.2",
     "argon2": "^0.28.7",
     "concurrently": "^8.2.2",
     "connect-session-sequelize": "^7.1.4",
@@ -25,7 +28,7 @@
     "express-session": "^1.17.3",
     "mysql2": "^2.3.3",
     "pg": "^8.11.3",
-    "prisma": "^5.4.2",
+    "prisma": "^5.5.2",
     "sequelize": "^6.33.0"
   },
   "devDependencies": {

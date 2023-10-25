@@ -19,27 +19,18 @@ npm install
 ```
 
 ## migrate data model
-1. go to index.js
-2. uncomment the code this code in the index.js: 
-```
-// this code
-(async()=>{
-    await db.sync();
-})();
-
-// and this
-store.sync();
-```
-3. then run the server, if the query already executed, comment again thats code
+1. `npm run migrate-model`
+2. then exit / ctrl + c
 
 ## migrate the seeder
-1. setup your database url in .env
-2. npx prisma generate
-3. npm run seed
+1. create a new file named ".env" at root path and copy and paste code from env.dev 
+2. then setup your database url in .env
+3. `npm run generate`
+4. `npm run seeder`
 
 ## run server
 ```
-npx nodemon run
+npm start
 ```
 
 ## api method
