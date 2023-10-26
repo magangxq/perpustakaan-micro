@@ -4,7 +4,10 @@ import argon2 from "argon2";
 export const getUsers = async(req, res) =>{
     try {
         const response = await User.findAll({
-            attributes:['id', 'uuid','name','email','role']
+            attributes:['id', 'uuid','name','email','role'],
+            where: {
+                registration_status: 'diterima'
+            }
         });
         res.status(200).json(response);
     } catch (error) {
