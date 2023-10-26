@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const FormEditUser = () => {
+const FormEditApplicant = () => {
   const [name, setName] = useState("");
-  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    const getUserById = async () => {
+    const getApplicantById = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/member-list/users/${id}`);
+        const response = await axios.get(`http://localhost:2000/member-applicant/${id}`);
         setName(response.data.name);
-        setRole(response.data.role);
+        setStatus(response.data.registration_status);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
         }
       }
     };
-    getUserById();
+    getApplicantById();
   }, [id]);
 
-  const updateUser = async (e) => {
+  const updateApplicant = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:2000/member-list/update-role/${id}`, {
-        role: role,
+      await axios.patch(`http://localhost:2000/member-applicant/${id}`, {
+        registration_status: status,
       });
-      navigate("/users");
+      navigate("/applicants");
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
@@ -39,28 +39,27 @@ const FormEditUser = () => {
   };
   return (
     <div>
-      <h1 className="title">Users</h1>
-      <h2 className="subtitle">Update Role {name}</h2>
-      <Link to="/users" className="button is-danger mb-2">
+      <h1 className="title">Applicants</h1>
+      <h2 className="subtitle">Update Registration Status {name}</h2>
+      <Link to="/applicants" className="button is-danger mb-2">
           Cancel
         </Link>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
-            <form onSubmit={updateUser}>
+            <form onSubmit={updateApplicant}>
               <p className="has-text-centered">{msg}</p>
               <div className="field">
                 <label className="label">Role</label>
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
                     >
-                      <option value="developer">Developer</option>
-                      <option value="admin">Admin</option>
-                      <option value="pustakawan">Pustakawan</option>
-                      <option value="anggota">Anggota</option>
+                      <option value="verifikasi">Verifikasi</option>
+                      <option value="diterima">Terima</option>
+                      <option value="ditolak">Tolak</option>
                     </select>
                   </div>
                 </div>
@@ -80,4 +79,4 @@ const FormEditUser = () => {
   );
 };
 
-export default FormEditUser;
+export default FormEditApplicant;

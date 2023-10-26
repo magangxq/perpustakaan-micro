@@ -25,7 +25,7 @@ const BookList = () => {
     <div>
       <h1 className="title">Books</h1>
       <h2 className="subtitle">List of Books</h2>
-      {user && user.role === "developer" && "admin" && "pustakawan" && (
+      {user && user.role !== "anggota" && (
         <Link to="/books/add" className="button is-primary mb-2">
           Add New
         </Link>
@@ -38,9 +38,7 @@ const BookList = () => {
             <th>Author</th>
             <th>Publisher</th>
             <th>Book Status</th>
-            {user && user.role === "developer" && user.role === "admin" (
-              <th>Actions</th>
-            )}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -51,8 +49,8 @@ const BookList = () => {
               <td>{book.author}</td>
               <td>{book.publisher}</td>
               <td>{book.book_status}</td>
-              {user && user.role === "developer" && user.role === "admin" (
-                <td>
+
+              <td>
                 <div>
                   <Link
                     to={`/books/detail/${book.id}`}
@@ -60,21 +58,25 @@ const BookList = () => {
                   >
                     Detail
                   </Link>
-                  <Link
-                    to={`/books/edit/${book.id}`}
-                    className="button is-small is-warning mr-1"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => deleteBook(book.id)}
-                    className="button is-small is-danger"
-                  >
-                    Delete
-                  </button>
-                  </div>
-                </td>
-              )}
+                  {user && user.role !== "anggota" && (
+                    <>
+                      <Link
+                        to={`/books/edit/${book.id}`}
+                        className="button is-small is-warning mr-1"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => deleteBook(book.id)}
+                        className="button is-small is-danger"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
+              </td>
+
             </tr>
           ))}
         </tbody>

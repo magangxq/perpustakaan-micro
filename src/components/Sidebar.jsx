@@ -18,7 +18,7 @@ const Sidebar = () => {
   return (
     <div>
       <aside className="menu pl-2 has-shadow">
-        
+
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <li>
@@ -26,18 +26,20 @@ const Sidebar = () => {
               <IoHome /> Profile
             </NavLink>
           </li>
-          <li>
-            <NavLink to={"/books"}>
-              <IoBook /> Books
-            </NavLink>
-          </li>
+          {user && user.registration_status !== "verifikasi" && (
+            <li>
+              <NavLink to={"/books"}>
+                <IoBook /> Books
+              </NavLink>
+            </li>
+          )}
         </ul>
-        {user && user.role !== "anggota" && user.role !== "pustakawan" &&(
+        {user && user.role !== "anggota" && user.role !== "pustakawan" && (
           <div>
             <p className="menu-label">Admin</p>
             <ul className="menu-list">
               <li>
-                <NavLink to={"/member-applicant"}>
+                <NavLink to={"/applicants"}>
                   <IoPersonAdd /> Member Applicant
                 </NavLink>
                 <NavLink to={"/users"}>
@@ -47,7 +49,6 @@ const Sidebar = () => {
             </ul>
           </div>
         )}
-
         <p className="menu-label">Settings</p>
         <ul className="menu-list">
           <li>

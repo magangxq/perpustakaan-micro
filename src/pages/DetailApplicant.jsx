@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
-import BookList from "../components/BookList";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
+import PageDetailApplicant from "../components/PageDetailApplicant";
 
-const Books = () => {
+const DetailApplicant = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError, user } = useSelector((state) => state.auth);
@@ -18,16 +18,17 @@ const Books = () => {
     if (isError) {
       navigate("/");
     }
-
-    if (user && user.registration_status === "verifikasi") {
+    
+    if (user && user.role !== "developer" && user.role !== "admin" ) {
       navigate("/profile");
     }
+    
   }, [isError, user, navigate]);
   return (
     <Layout>
-      <BookList />
+      <PageDetailApplicant />
     </Layout>
   );
 };
 
-export default Books;
+export default DetailApplicant;

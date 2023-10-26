@@ -42,12 +42,14 @@ const ProfileUser = () => {
                   </label></label>
                 </div>
               )}
+              {user && user.registration_status !== "verifikasi" && (
               <Link
                 to={`/profile/edit`}
                 className="button is-info mt-5"
               >
                 Edit Profile
               </Link>
+              )}
             </div>
           </div>
         </div>

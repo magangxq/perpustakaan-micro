@@ -11,6 +11,9 @@ import DetailBook from "./pages/DetailBook";
 import EditProfile from "./pages/EditProfile";
 import EditUser from "./pages/EditUser";
 import DetailUser from "./pages/DetailUser";
+import Applicants from "./pages/Applicants";
+import DetailApplicant from "./pages/DetailApplicant";
+import EditApplicant from "./pages/EditApplicant";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/edit/:id" element={<EditUser />} />
           <Route path="/users/detail/:id" element={<DetailUser />} />
+          <Route path="/applicants" element={<Applicants />} />
+          <Route path="/applicants/detail/:id" element={<DetailApplicant />} />
+          <Route path="/applicants/edit/:id" element={<EditApplicant />} />
         </Routes>
       </BrowserRouter>
     </div>
