@@ -1,73 +1,71 @@
-# **Perpustakaan**
+# Perpustakaan Backend
 
-# configuration steps
-1. [install dependencies](#dependencies-installation)
-2. create your database in postgresql then config the database at /config/Database.js
+## Installation
+To install the projec, follow these steps: 
+1. Clone the repository: 
 ```
-const db = new Sequelize('yourdatabase', 'user', 'password', {
-    host: "localhost",
-    dialect: "postgresql"
-});
+git clone -b backend https://github.com/magangxq/perpustakaan-micro.git
 ```
-3. [migrate the data model](#migrate-data-model) 
-4. [migrate the seed](#migrate-the-seeder)
-5. [run the server](#run-server)
-
-## dependencies installation
+2. Install the dependencies:
 ```
 npm install
 ```
-
-## migrate data model
-1. `npm run migrate-model`
-2. then exit / ctrl + c
-
-## migrate the seeder
-1. create a new file named ".env" at root path and copy and paste code from env.dev 
-2. then setup your database url in .env
-3. `npm run generate`
-4. `npm run seeder`
-
-## run server
+3. Create a database in PostgreSQL and configure it in the config/Database.js file:
+``` JavaScript
+const db = new Sequelize('yourdatabase', 'user', 'password', {
+  host: 'localhost',
+  dialect: 'postgresql',
+});
+```
+4. Create a new file named `.env` at root path then copy and paste code from `.env.dev` to `.env`. Then setup your Database URL in `.env`
+5. Migrate the seed data:
+```
+npm run migrate-model
+```
+6. Migrate the seed data: 
+```
+npm run generate
+npm run seeder
+```
+7. Start the server:
 ```
 npm start
 ```
 
-## api method
+## API Methods
+
+The API methods for the Perpustakaan backend are as follows:
+
+**Auth**
+- POST `/register` : Register a new user.
+- POST `/login` : Login an existing user.
+- DEL `/logout` : Logout the current user.
+
+**Profile**
+- GET `/user/profile` : Show the active session user profile.
+- PATCH `/user/profile/:uuid` : Edit name of profile.
+
+**Member Applicants**
+- GET `/member-applicant` : Get a list of all member applicants.
+- GET `/member-applicant/:id` : Get the details of a specific member applicant.
+- PATCH `/member-applicant/:id` : Update the registration status of a member applicant.
+
+**User**
+- GET `/member-list/users` : Get a list of all users.
+- GET `/member-list/users/:id` : Get the details of a specific user.
+- PATCH `/member-list/users/:id` : Update the details of a specific user.
+
+**Books**
+- POST `/books` : Create a new book.
+- GET `/books` : Get a list of all books.
+- GET `/books/:id` : Get the details of a specific book.
+- PATCH `/books/:id` : Update the details of a specific book.
+- DEL `/books/:id` : Delete a book.
+
+
+## Folder Structure
 ```
-api method  
-
-auth/
-- POST register *(All Role)*                  : register user
-- POST login *(All Role)*                     : login user
-- DEL logout *(All Role)*                     : logout user
-
-users - profile/
-- GET profile *(All Role)*                    : melihat profile 
-- PATCH edit profile *(All Role: Verified)*   : mengedit profile 
-
-ma - member applicant/
-- GET applicant *(Dev, Admin)*                : melihat semua calon anggota perpustakaan yang belum terverifikasi
-- GET applicant uuid *(Dev, Admin)*           : melihat detail dari calon anggota perpus yang belum terverifikasi
-- PATCH update regStatus *(Dev, Admin)*       : mengupdate/meng-verifikasi user yang sudah sesuai profile datanya
-
-ma - users/
-- GET users *(Dev, Admin)*                    : melihat semua akun yang ada di perpustakan
-- GET users id *(Dev, Admin)*                 : melihat detail dari akun yang terdaftar di perpustakaan
-- PATCH update role *(Dev, Admin)*            : mengupdate role dari akun user yang ingin di update
-
-books/ 
-- POST create book *(Dev, Admin, Pust)*       : membuat/menambahkan buku 
-- GET all books *(All Role: Verified)*        : melihat semua list buku
-- GET book id *(All Role: Verified)*          : melihat detail dari satu buku
-- PATCH edit book *(Dev, Admin, Pust)*        : mengedit buku
-- DEL delete book *(Dev, Admin, Pust)*        : menghapus buku
-
-```
-
-## folder tree
-```
-perpustakaan - backend/
+perpustakaan
 ├── config
 │   └── Database.js
 ├── controllers
@@ -100,3 +98,4 @@ perpustakaan - backend/
 ├── package.json
 └── README.md
 ```
+
