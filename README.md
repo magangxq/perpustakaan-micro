@@ -1,7 +1,7 @@
 # Perpustakaan Backend
 
 ## Installation
-To install the projec, follow these steps: 
+To install the project, follow these steps: 
 1. Clone the repository: 
 ```
 git clone -b backend https://github.com/magangxq/perpustakaan-micro.git
