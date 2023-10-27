@@ -24,8 +24,8 @@ const ApplicantList = () => {
             <h1 className="title">Member Applicant</h1>
             <h2 className="subtitle">List of Applicants</h2>
             {/* <Link to="/users/add" className="button is-primary mb-2">
-        Add New
-      </Link> */}
+                Add New
+            </Link> */}
             <table className="table is-striped is-fullwidth">
                 <thead>
                     <tr>
@@ -59,11 +59,11 @@ const ApplicantList = () => {
                                     Edit Registration Status
                                 </Link>
                                 {/* <button
-                  onClick={() => deleteUser(user.uuid)}
-                  className="button is-small is-danger"
-                >
-                  Delete
-                </button> */}
+                                    onClick={() => deleteUser(user.uuid)}
+                                    className="button is-small is-danger"
+                                >
+                                    Delete
+                                </button> */}
                             </td>
                         </tr>
                     ))}

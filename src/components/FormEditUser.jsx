@@ -6,6 +6,7 @@ const FormEditUser = () => {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [msg, setMsg] = useState("");
+  const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -26,6 +27,7 @@ const FormEditUser = () => {
 
   const updateUser = async (e) => {
     e.preventDefault();
+    setIsMutating(true)
     try {
       await axios.patch(`http://localhost:2000/member-list/update-role/${id}`, {
         role: role,
@@ -36,14 +38,15 @@ const FormEditUser = () => {
         setMsg(error.response.data.msg);
       }
     }
+    setIsMutating(false);
   };
   return (
     <div>
       <h1 className="title">Users</h1>
       <h2 className="subtitle">Update Role {name}</h2>
       <Link to="/users" className="button is-danger mb-2">
-          Cancel
-        </Link>
+        Cancel
+      </Link>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
@@ -67,9 +70,15 @@ const FormEditUser = () => {
               </div>
               <div className="field">
                 <div className="control">
-                  <button type="submit" className="button is-success">
-                    Update
-                  </button>
+                  {!isMutating ? (
+                    <button type="submit" className="button is-success">
+                      Update
+                    </button>
+                  ) : (
+                    <button type="submit" className="button is-success">
+                      Updating...
+                    </button>
+                  )}
                 </div>
               </div>
             </form>

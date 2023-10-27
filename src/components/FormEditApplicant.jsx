@@ -6,6 +6,7 @@ const FormEditApplicant = () => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
   const [msg, setMsg] = useState("");
+  const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -26,6 +27,7 @@ const FormEditApplicant = () => {
 
   const updateApplicant = async (e) => {
     e.preventDefault();
+    setIsMutating(true)
     try {
       await axios.patch(`http://localhost:2000/member-applicant/${id}`, {
         registration_status: status,
@@ -36,6 +38,7 @@ const FormEditApplicant = () => {
         setMsg(error.response.data.msg);
       }
     }
+    setIsMutating(false)
   };
   return (
     <div>
@@ -66,9 +69,15 @@ const FormEditApplicant = () => {
               </div>
               <div className="field">
                 <div className="control">
+                {!isMutating ? (
                   <button type="submit" className="button is-success">
                     Update
                   </button>
+                  ) : (
+                    <button type="submit" className="button is-success">
+                    Updating...
+                  </button>
+                  )}
                 </div>
               </div>
             </form>

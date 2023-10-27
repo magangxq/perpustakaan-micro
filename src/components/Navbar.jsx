@@ -7,7 +7,6 @@ import { LogOut, reset } from "../features/authSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { user } = useSelector((state) => state.auth);
 
   const logout = () => {
     dispatch(LogOut());
@@ -24,21 +23,8 @@ const Navbar = () => {
       >
         <div className="navbar-brand">
           <NavLink to="/profile" className="navbar-item">
-            <img src={logo} width="112" height="28" alt="logo" />
+            <img src={logo} width="160" height="40" alt="logo" />
           </NavLink>
-
-          <a
-            href="!#"
-            role="button"
-            className="navbar-burger burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
         </div>
 
         <div id="navbarBasicExample" className="navbar-menu">

@@ -49,7 +49,6 @@ const BookList = () => {
               <td>{book.author}</td>
               <td>{book.publisher}</td>
               <td>{book.book_status}</td>
-
               <td>
                 <div>
                   <Link
@@ -76,7 +75,6 @@ const BookList = () => {
                   )}
                 </div>
               </td>
-
             </tr>
           ))}
         </tbody>

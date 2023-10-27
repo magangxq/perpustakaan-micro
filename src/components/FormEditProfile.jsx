@@ -7,6 +7,7 @@ const FormEditProfile = () => {
     const [user, setUser] = useState("");
     const [name, setName] = useState("");
     const [msg, setMsg] = useState("");
+    const [isMutating, setIsMutating] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,6 +29,7 @@ const FormEditProfile = () => {
 
     const updateBook = async (e) => {
         e.preventDefault();
+        setIsMutating(true)
         try {
             await axios.patch(`http://localhost:2000/user/edit-profile/${uuid}`, {
                 name: name,
@@ -38,6 +40,7 @@ const FormEditProfile = () => {
                 setMsg(error.response.data.msg);
             }
         }
+        setIsMutating(false)
     };
 
     return (
@@ -66,9 +69,15 @@ const FormEditProfile = () => {
                             </div>
                             <div className="field">
                                 <div className="control">
+                                {!isMutating ? (
                                     <button type="submit" className="button is-success">
                                         Edit
                                     </button>
+                                ) : (
+                                    <button type="submit" className="button is-success">
+                                        Editing...
+                                    </button>
+                                )}
                                 </div>
                             </div>
                         </form>
