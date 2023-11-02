@@ -31,6 +31,7 @@ const Userlist = () => {
       <h2 className="subtitle">List of Users</h2>
       <div className="is-flex is-justify-content-space-between">
         <div className="mb-2">
+        <label>Role : </label>
           <select
             className="p-1"
             value={filterRole}
@@ -48,7 +49,7 @@ const Userlist = () => {
           <input
             type="text"
             className="p-1 mr-1 is-rounded"
-            placeholder="Filter by Title"
+            placeholder="Filter by Name"
             value={filterUser}
             onChange={(e) => setFilterUser(e.target.value)}
           />
