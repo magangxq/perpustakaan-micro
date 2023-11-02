@@ -3,12 +3,14 @@ import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 const FormEditBook = () => {
+  const [titleEdit, setTitleEdit] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication, setPublication] = useState("");
   const [description, setDescription] = useState("");
   const [msg, setMsg] = useState("");
+  const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -18,6 +20,7 @@ const FormEditBook = () => {
         const response = await axios.get(
           `http://localhost:2000/books/${id}`
         );
+        setTitleEdit(response.data.title);
         setTitle(response.data.title);
         setAuthor(response.data.author);
         setPublisher(response.data.publisher);
@@ -34,6 +37,14 @@ const FormEditBook = () => {
 
   const updateBook = async (e) => {
     e.preventDefault();
+
+    if (!title || !author || !publisher || !publication || !description) {
+      setMsg("Semua Kolom Harus diisi")
+      return;
+    }
+
+    setIsMutating(true)
+
     try {
       await axios.patch(`http://localhost:2000/books/${id}`, {
         title: title,
@@ -42,18 +53,20 @@ const FormEditBook = () => {
         publication_year: publication,
         description: description,
       });
+      
       navigate("/books");
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
+    setIsMutating(false)
   };
 
   return (
     <div>
       <h1 className="title">Books</h1>
-      <h2 className="subtitle">Edit Book <label>{title}</label></h2>
+      <h2 className="subtitle">Edit Book <label>{titleEdit}</label></h2>
       <Link to="/books" className="button is-danger mb-2">
           Cancel
         </Link>
@@ -61,7 +74,7 @@ const FormEditBook = () => {
         <div className="card-content">
           <div className="content">
             <form onSubmit={updateBook}>
-              <p className="has-text-centered">{msg}</p>
+              <p className="has-text-centered has-text-danger">{msg}</p>
               <div className="field">
                 <label className="label">Title</label>
                 <div className="control">
@@ -125,9 +138,15 @@ const FormEditBook = () => {
 
               <div className="field">
                 <div className="control">
+                {!isMutating ? (
                   <button type="submit" className="button is-success">
                     Update
                   </button>
+                ) : (
+                  <button type="submit" className="button is-success">
+                    Updating...
+                  </button>
+                )}
                 </div>
               </div>
             </form>

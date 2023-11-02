@@ -13,6 +13,12 @@ const FormAddBook = () => {
 
   const saveProduct = async (e) => {
     e.preventDefault();
+
+    if (!title || !author || !publisher || !publication || !description) {
+      setMsg("Semua Kolom Harus diisi")
+      return;
+    }
+
     try {
       await axios.post("http://localhost:2000/books", {
         title: title,
@@ -40,7 +46,7 @@ const FormAddBook = () => {
         <div className="card-content">
           <div className="content">
             <form onSubmit={saveProduct}>
-              <p className="has-text-centered">{msg}</p>
+              <p className="has-text-centered has-text-danger">{msg}</p>
               <div className="field">
                 <label className="label">Title</label>
                 <div className="control">
