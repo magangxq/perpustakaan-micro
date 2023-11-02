@@ -1,19 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Profile from "./pages/Profile";
+import WelcomePage from "./components/Welcome";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Users from "./pages/Users";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
 import EditBook from "./pages/EditBook";
-import WelcomePage from "./components/Welcome";
+import DeleteBook from "./pages/DeleteBook";
 import DetailBook from "./pages/DetailBook";
-import EditProfile from "./pages/EditProfile";
+import Users from "./pages/Users";
 import EditUser from "./pages/EditUser";
 import DetailUser from "./pages/DetailUser";
 import Applicants from "./pages/Applicants";
-import DetailApplicant from "./pages/DetailApplicant";
 import EditApplicant from "./pages/EditApplicant";
+import DetailApplicant from "./pages/DetailApplicant";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
           <Route path="/books/edit/:id" element={<EditBook />} />
+          <Route path="/books/delete/:id" element={<DeleteBook />} />
           <Route path="/books/detail/:id" element={<DetailBook />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/edit/:id" element={<EditUser />} />

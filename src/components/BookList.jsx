@@ -17,11 +17,6 @@ const BookList = () => {
     setBooks(response.data);
   };
 
-  // const deleteBook = async (bookId) => {
-  //   await axios.delete(`http://localhost:2000/books/${bookId}`);
-  //   getBooks();
-  // };
-
   return (
     <div>
       <h1 className="title">Books</h1>
@@ -72,13 +67,6 @@ const BookList = () => {
                       >
                         Delete
                       </Link>
-                      {/* <button
-                        onClick={() => deleteBook(book.id)}
-                        className="button is-small is-danger"
-                      >
-                        Delete
-                      </button> */}
-                      
                     </>
                   )}
                 </div>
