@@ -60,39 +60,6 @@ const FormDeleteBook = () => {
                 </div>
             </div>
         </div>
-
-
-        // <div>
-        //     <button className="btn btn-error btn-sm" onClick={handleChange}>
-        //         Delete
-        //     </button>
-
-        //     <div className="modal">
-        //         <div className="modal-box">
-        //             <h3 className="font-bold text-lg">
-        //                 Are sure to delete {BookList.name} ?
-        //             </h3>
-        //             <div className="modal-action">
-        //                 <button type="button" className="btn" onClick={handleChange}>
-        //                     Close
-        //                 </button>
-        //                 {!isMutating ? (
-        //                     <button
-        //                         type="button"
-        //                         onClick={() => deleteBook(BookList.id)}
-        //                         className="btn btn-primary"
-        //                     >
-        //                         Delete
-        //                     </button>
-        //                 ) : (
-        //                     <button type="button" className="btn loading">
-        //                         Deleting...
-        //                     </button>
-        //                 )}
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
     )
 }
 
