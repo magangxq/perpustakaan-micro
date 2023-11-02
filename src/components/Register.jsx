@@ -36,7 +36,7 @@ function RegisterPage() {
 
     if (formData.password !== formData.confPassword) {
       setIsError(true);
-      setMessage('Konfirmasi kata sandi tidak sesuai');
+      setMessage('Confirm Password tidak sesuai');
       return;
     }
 
@@ -72,8 +72,8 @@ function RegisterPage() {
     <div className="columns is-centered mt-3">
       <div className="column is-4">
         <form onSubmit={handleSubmit} className="box">
-          {isError && <p className="has-text-centered">{message}</p>}
           <h1 className="title is-2">Registrasi</h1>
+          {isError && <p className="has-text-centered has-text-danger">{message}</p>}
           <div className="field">
             <label className="label">Name</label>
             <div className="control">

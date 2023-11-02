@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+// import DeleteBook from "./DeleteBook";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -16,10 +17,10 @@ const BookList = () => {
     setBooks(response.data);
   };
 
-  const deleteBook = async (bookId) => {
-    await axios.delete(`http://localhost:2000/books/${bookId}`);
-    getBooks();
-  };
+  // const deleteBook = async (bookId) => {
+  //   await axios.delete(`http://localhost:2000/books/${bookId}`);
+  //   getBooks();
+  // };
 
   return (
     <div>
@@ -65,12 +66,19 @@ const BookList = () => {
                       >
                         Edit
                       </Link>
-                      <button
+                      <Link
+                        to={`/books/delete/${book.id}`}
+                        className="button is-small is-danger"
+                      >
+                        Delete
+                      </Link>
+                      {/* <button
                         onClick={() => deleteBook(book.id)}
                         className="button is-small is-danger"
                       >
                         Delete
-                      </button>
+                      </button> */}
+                      
                     </>
                   )}
                 </div>
