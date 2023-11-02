@@ -44,7 +44,7 @@ const ProfileUser = () => {
                   </div>
                   <div className="field mt-5">
                     <label className="has-text-weight-semibold ">
-                      Your Account Is Still In The Verification Stage,<br/>Wait Until The Admin Approves Your Registration Request
+                      Your Account Is Still In The Verification Stage,<br />Wait Until The Admin Approves Your Registration Request
                     </label>
                   </div>
                 </>
@@ -61,6 +61,9 @@ const ProfileUser = () => {
           </div>
         </div>
       </div>
+      {/* <div className="columns is-centered" style={{marginTop : "30vh"}}>
+        <a href="javascript:window.print()" className="is-centered mt-6">Download Profile Page as a PDF</a>
+      </div> */}
     </div>
   );
 };
