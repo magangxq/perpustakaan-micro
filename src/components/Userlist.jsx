@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { IoSearch } from "react-icons/io5";
 
 const Userlist = () => {
   const [users, setUsers] = useState([]);
+  const [filterUser, setFilterUser] = useState("");
+  const [filterRole, setFilterRole] = useState("all");
 
   useEffect(() => {
     getUsers();
@@ -14,18 +17,44 @@ const Userlist = () => {
     setUsers(response.data);
   };
 
-  // const deleteUser = async (userId) => {
-  //   await axios.delete(`http://localhost:2000/member-list/users/${userId}`);
-  //   getUsers();
-  // };
+  const filteredUsers = users.filter((user) => {
+    const titleMatch = user.name.toLowerCase().includes(filterUser.toLowerCase());
+    const roleMatch = filterRole === "all" || user.role === filterRole;
+    return titleMatch && roleMatch;
+  });
+
+  const roleOptions = ["all", "developer", "admin", "pustakawan", "anggota"]
 
   return (
     <div>
       <h1 className="title">Users</h1>
       <h2 className="subtitle">List of Users</h2>
-      {/* <Link to="/users/add" className="button is-primary mb-2">
-        Add New
-      </Link> */}
+      <div className="is-flex is-justify-content-space-between">
+        <div className="mb-2">
+          <select
+            className="p-1"
+            value={filterRole}
+            onChange={(e) => setFilterRole(e.target.value)}
+          >
+            {roleOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="is-flex is-align-items-center mb-2">
+          <input
+            type="text"
+            className="p-1 mr-1 is-rounded"
+            placeholder="Filter by Title"
+            value={filterUser}
+            onChange={(e) => setFilterUser(e.target.value)}
+          />
+          <IoSearch style={{ fontSize: "25px" }} />
+        </div>
+      </div>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>
@@ -37,7 +66,7 @@ const Userlist = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {filteredUsers.map((user, index) => (
             <tr key={user.uuid}>
               <td>{index + 1}</td>
               <td>{user.name}</td>
@@ -57,12 +86,6 @@ const Userlist = () => {
                 >
                   Edit Role
                 </Link>
-                {/* <button
-                  onClick={() => deleteUser(user.uuid)}
-                  className="button is-small is-danger"
-                >
-                  Delete
-                </button> */}
               </td>
             </tr>
           ))}
