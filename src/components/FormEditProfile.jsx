@@ -29,6 +29,12 @@ const FormEditProfile = () => {
 
     const updateBook = async (e) => {
         e.preventDefault();
+
+        if(!name) {
+            setMsg("Kolom Harus diisi")
+            return;
+        }
+
         setIsMutating(true)
         try {
             await axios.patch(`http://localhost:2000/user/edit-profile/${uuid}`, {
@@ -54,7 +60,7 @@ const FormEditProfile = () => {
                 <div className="card-content">
                     <div className="content">
                         <form onSubmit={updateBook}>
-                            <p className="has-text-centered">{msg}</p>
+                            <p className="has-text-centered has-text-danger">{msg}</p>
                             <div className="field">
                                 <label className="label">Name</label>
                                 <div className="control">
