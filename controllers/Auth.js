@@ -7,9 +7,9 @@ export const Login = async (req, res) =>{
             email: req.body.email
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    const match = await argon2.verify(user.password, req.body.password);
-    if(!match) return res.status(400).json({msg: "Wrong Password"});
+    if (!user || !(await argon2.verify(user.password, req.body.password))) {
+    return res.status(400).json({ msg: "Email / Password invalid" });
+    }
     req.session.userId = user.uuid;
     const uuid = user.uuid;
     const name = user.name;
