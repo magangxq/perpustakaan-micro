@@ -18,7 +18,8 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
         return response.data;
     } catch (error) {
         if(error.response){
-            const message = error.response.data.msg;
+            const message = "Gagal ! Email dan kata sandi salah";
+            // const message = error.response.data.msg;
             return thunkAPI.rejectWithValue(message);
         }
     }
@@ -36,8 +37,17 @@ export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
     }
 });
 
-export const LogOut = createAsyncThunk("user/LogOut", async() => {
-    await axios.delete('http://localhost:2000/auth/logout');
+export const LogOut = createAsyncThunk("user/LogOut", async(thunkAPI) => {
+    try {
+        const response = await axios.delete('http://localhost:2000/auth/logout'); 
+        return response.data;
+    } catch (error) {
+        if(error.response) {
+            const message = "Gagal Logout";
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+    
 });
 
 export const authSlice = createSlice({

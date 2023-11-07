@@ -14,6 +14,11 @@ function RegisterPage() {
 
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [nikError, setNikError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [ConfpasswordError, setConfPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -27,16 +32,36 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setNameError("");
+    setEmailError("");
+    setNikError("");
+    setPasswordError("");
+    setConfPasswordError("");
 
-    if (!formData.name || !formData.email || !formData.nik_nis || !formData.password || !formData.confPassword) {
-      setIsError(true);
-      setMessage('Semua kolom harus diisi.');
+    if (!formData.name) {
+      setNameError('Nama harus di isi.');
+      return;
+    }
+    if (!formData.email) {
+      setEmailError('Alamat Email harus di isi.');
+      return;
+    }
+    if (!formData.nik_nis) {
+      setNikError('NIK/NIS harus di isi.');
+      return;
+    }
+    if (!formData.password) {
+      setPasswordError('Password harus di isi.');
+      return;
+    }
+    if (!formData.confPassword) {
+      setConfPasswordError('Konfirmasi Password harus di isi.');
       return;
     }
 
     if (formData.password !== formData.confPassword) {
       setIsError(true);
-      setMessage('Confirm Password tidak sesuai');
+      setMessage('Konfirmasi password wajib sesuai dengan yang awal');
       return;
     }
 
@@ -50,19 +75,21 @@ function RegisterPage() {
         password: formData.password,
         confPassword: formData.confPassword
       });
-      if (response.ok) {
+      if (response) {
         // console.log("Registrasi sukses:", response.data);
         navigate("/login");
         setIsLoading(false);
       } else {
+        // console.log("error response")
         setIsError(true);
-        setMessage("Gagal mendaftar. Silakan coba lagi.");
+        setMessage("Gagal mendaftar.");
         setIsLoading(false);
       }
     } catch (error) {
       // console.error("Gagal mendaftar:", error);
       setIsError(true);
-      setMessage("Gagal mendaftar. Silakan coba lagi.");
+      // setMessage("Gagal mendaftar. Silakan coba lagi.");
+      setMessage(error.response.data.msg);
       setIsLoading(false);
     }
   };
@@ -79,30 +106,35 @@ function RegisterPage() {
             <div className="control">
               <input type="text" className="input" name="name" value={formData.username} onChange={handleChange} placeholder="Username" />
             </div>
+            {nameError && <p className="has-text-centered has-text-danger">{nameError}</p>}
           </div>
           <div className="field">
             <label className="label">Email</label>
             <div className="control">
               <input type="email" className="input" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
             </div>
+            {emailError && <p className="has-text-centered has-text-danger">{emailError}</p>}
           </div>
           <div className="field">
             <label className="label">NIK/NIS</label>
             <div className="control">
               <input type="number" className="input" name="nik_nis" value={formData.nik_nis} onChange={handleChange} placeholder="12345" />
             </div>
+            {nikError && <p className="has-text-centered has-text-danger">{nikError}</p>}
           </div>
           <div className="field">
             <label className="label">Password</label>
             <div className="control">
               <input type="password" className="input" name="password" value={formData.password} onChange={handleChange} placeholder="******" />
             </div>
+            {passwordError && <p className="has-text-centered has-text-danger">{passwordError}</p>}
           </div>
           <div className="field">
             <label className="label">Confirm Password</label>
             <div className="control">
               <input type="password" className="input" name="confPassword" value={formData.confPassword} onChange={handleChange} placeholder="******" />
             </div>
+            {ConfpasswordError && <p className="has-text-centered has-text-danger">{ConfpasswordError}</p>}
           </div>
           <div className="field mt-5">
             <button type="submit" className="button is-success is-fullwidth">

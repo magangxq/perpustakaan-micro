@@ -8,16 +8,46 @@ const FormAddBook = () => {
   const [publisher, setPublisher] = useState("");
   const [publication, setPublication] = useState("");
   const [description, setDescription] = useState("");
+  const [titleError, setTitleError] = useState("");
+  const [authorError, setAuthorError] = useState("");
+  const [publisherError, setPublisherError] = useState("");
+  const [publicationError, setPublicationError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const [msg, setMsg] = useState("");
+  const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
 
   const saveProduct = async (e) => {
     e.preventDefault();
 
-    if (!title || !author || !publisher || !publication || !description) {
-      setMsg("Semua Kolom Harus diisi")
+    setTitleError("");
+    setAuthorError("");
+    setPublisherError("");
+    setPublicationError("");
+    setDescriptionError("");
+
+    if (!title) {
+      setTitleError("Title Harus di isi")
       return;
     }
+    if (!author) {
+      setAuthorError("Author Harus di isi")
+      return;
+    }
+    if (!publisher) {
+      setPublisherError("Publisher Harus di isi")
+      return;
+    }
+    if (!publication) {
+      setPublicationError("Publication Year Harus di isi")
+      return;
+    }
+    if (!description) {
+      setDescriptionError("Description Harus di isi")
+      return;
+    }
+
+    setIsMutating(true)
 
     try {
       await axios.post("http://localhost:2000/books", {
@@ -33,6 +63,7 @@ const FormAddBook = () => {
         setMsg(error.response.data.msg);
       }
     }
+    setIsMutating(false)
   };
 
   return (
@@ -58,6 +89,7 @@ const FormAddBook = () => {
                     placeholder="Book Title"
                   />
                 </div>
+                {titleError && <p className="has-text-centered has-text-danger">{titleError}</p>}
               </div>
               <div className="field">
                 <label className="label">Author</label>
@@ -70,6 +102,7 @@ const FormAddBook = () => {
                     placeholder="Author"
                   />
                 </div>
+                {authorError && <p className="has-text-centered has-text-danger">{authorError}</p>}
               </div>
               <div className="field">
                 <label className="label">Publisher</label>
@@ -82,6 +115,7 @@ const FormAddBook = () => {
                     placeholder="Publisher"
                   />
                 </div>
+                {publisherError && <p className="has-text-centered has-text-danger">{publisherError}</p>}
               </div>
               <div className="field">
                 <label className="label">Publication Year</label>
@@ -94,6 +128,7 @@ const FormAddBook = () => {
                     placeholder="Publication"
                   />
                 </div>
+                {publicationError && <p className="has-text-centered has-text-danger">{publicationError}</p>}
               </div>
               <div className="field">
                 <label className="label">Description</label>
@@ -106,16 +141,26 @@ const FormAddBook = () => {
                     placeholder="Description"
                   />
                 </div>
+                {descriptionError && <p className="has-text-centered has-text-danger">{descriptionError}</p>}
               </div>
 
               <div className="field">
                 <div className="control">
+                {!isMutating ? (
                   <button
                     type="submit"
                     className="button is-success is-fullwidth"
                   >
                     Save
                   </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="button is-success is-fullwidth"
+                  >
+                    Saving...
+                  </button>
+                )}
                 </div>
               </div>
             </form>

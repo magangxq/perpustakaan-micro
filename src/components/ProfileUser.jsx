@@ -14,48 +14,50 @@ const ProfileUser = () => {
       <div className="columns is-centered">
         <div className="column is-half">
           <div className="box has-background-primary">
-            <div className="content">
-              <div className="field has-text-white">
-                <label className="label has-text-white">Name: &nbsp;<label className="has-text-weight-semibold">
+            <div className="content ">
+              <div className="field has-text-white is-flex is-justify-content-center">
+                <label className="label has-text-white ">Name: &nbsp;<label className="has-text-weight-semibold">
                   {user && user.name}
                 </label></label>
               </div>
-              <div className="field has-text-white">
+              <div className="field has-text-white is-flex is-justify-content-center">
                 <label className="label has-text-white">Email: &nbsp;<label className="has-text-weight-semibold">
                   {user && user.email}
                 </label></label>
               </div>
-              <div className="field has-text-white">
+              <div className="field has-text-white is-flex is-justify-content-center">
                 <label className="label has-text-white">NIK/NIS: &nbsp;<label className="has-text-weight-semibold">
                   {user && user.nik_nis}
                 </label></label>
               </div>
               <div className="field">
-                <label className="label has-text-white">Role: &nbsp;<label className="has-text-weight-semibold">
+                <label className="label has-text-white is-flex is-justify-content-center">Role: &nbsp;<label className="has-text-weight-semibold">
                   {user && user.role}
                 </label></label>
               </div>
               {user && user.registration_status === "verifikasi" && (
                 <>
                   <div className="field">
-                    <label className="label has-text-white">Status: &nbsp;<label className="has-text-weight-semibold ">
+                    <label className="label has-text-white is-flex is-justify-content-center">Status: &nbsp;<label className="has-text-weight-semibold ">
                       {user && user.registration_status}
                     </label></label>
                   </div>
                   <div className="field mt-5">
-                    <label className="has-text-weight-semibold ">
+                    <label className="has-text-weight-semibold is-flex is-justify-content-center">
                       Your Account Is Still In The Verification Stage,<br />Wait Until The Admin Approves Your Registration Request
                     </label>
                   </div>
                 </>
               )}
               {user && user.registration_status !== "verifikasi" && (
-                <Link
-                  to={`/profile/edit`}
-                  className="button is-info mt-5"
-                >
-                  Edit Profile
-                </Link>
+                <div className="is-flex is-justify-content-center">
+                  <Link
+                    to={`/profile/edit`}
+                    className="button is-info mt-5"
+                  >
+                    Edit Profile
+                  </Link>
+                </div>
               )}
             </div>
           </div>

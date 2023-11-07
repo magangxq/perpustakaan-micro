@@ -6,8 +6,8 @@ import { LoginUser, reset } from "../features/authSlice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const [warning, setWarning] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isError, isSuccess, isLoading, message } = useSelector(
@@ -24,9 +24,15 @@ const Login = () => {
   const Auth = (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setWarning(true)
-      setMsg("Masukkan Email dan Password")
+    setEmailError("");
+    setPasswordError("");
+
+    if (!email) {
+      setEmailError("Alamat Email Harus di isi");
+      return;
+    }
+    if (!password) {
+      setPasswordError("Password Harus di isi");
       return;
     }
 
@@ -42,7 +48,8 @@ const Login = () => {
               <form onSubmit={Auth} className="box">
                 <h1 className="title is-2">Login</h1>
                 {isError && <p className="has-text-centered has-text-danger">{message}</p>}
-                {warning && <p className="has-text-centered has-text-danger">{msg}</p>}
+                {emailError && <p className="has-text-centered has-text-danger">{emailError}</p>}
+                {passwordError && <p className="has-text-centered has-text-danger">{passwordError}</p>}
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control">

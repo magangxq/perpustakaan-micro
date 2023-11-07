@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
 const FormEditBook = () => {
+    const [code, setCode] = useState("");
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [publisher, setPublisher] = useState("");
@@ -18,6 +19,7 @@ const FormEditBook = () => {
                 const response = await axios.get(
                     `http://localhost:2000/books/${id}`
                 );
+                setCode(response.data.code);
                 setTitle(response.data.title);
                 setAuthor(response.data.author);
                 setPublisher(response.data.publisher);
@@ -42,6 +44,14 @@ const FormEditBook = () => {
                 <div className="card-content">
                     <div className="content">
                         <p className="has-text-centered">{msg}</p>
+                        <div className="field">
+                            <label className="label">
+                                Code: &nbsp;
+                                <label className="has-text-weight-semibold">
+                                    {code}
+                                </label>
+                            </label>
+                        </div>
                         <div className="field">
                             <label className="label">
                                 Title: &nbsp;
