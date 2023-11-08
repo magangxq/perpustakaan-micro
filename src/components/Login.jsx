@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
+import * as Yup from "yup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,11 @@ const Login = () => {
     (state) => state.auth
   );
 
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email address").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  })
+
   useEffect(() => {
     if (user || isSuccess) {
       navigate("/profile");
@@ -21,22 +27,32 @@ const Login = () => {
     dispatch(reset());
   }, [user, isSuccess, dispatch, navigate]);
 
-  const Auth = (e) => {
+  const Auth = async (e) => {
     e.preventDefault();
 
-    setEmailError("");
-    setPasswordError("");
+    try {
+      await validationSchema.validate(
+        {
+          email,
+          password
+        },
+        { abortEarly: false}
+      );
 
-    if (!email) {
-      setEmailError("Alamat Email Harus di isi");
-      return;
-    }
-    if (!password) {
-      setPasswordError("Password Harus di isi");
-      return;
-    }
+      setEmailError('');
+      setPasswordError('');
+
 
     dispatch(LoginUser({ email, password }));
+  } catch (error) {
+    const errorMessages = error.inner.reduce((messages, err) => {
+      messages[err.path] = err.message;
+      return messages;
+    }, {});
+
+    setEmailError(errorMessages.email || '');
+    setPasswordError(errorMessages.password || '');
+  }
   };
 
   return (
@@ -48,19 +64,19 @@ const Login = () => {
               <form onSubmit={Auth} className="box">
                 <h1 className="title is-2">Login</h1>
                 {isError && <p className="has-text-centered has-text-danger">{message}</p>}
-                {emailError && <p className="has-text-centered has-text-danger">{emailError}</p>}
-                {passwordError && <p className="has-text-centered has-text-danger">{passwordError}</p>}
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control">
                     <input
-                      type="email"
+                      type="text"
                       className="input"
+                      name="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email"
+                      placeholder="YourEmail@example.com"
                     />
                   </div>
+                  {emailError && <p className="has-text-centered has-text-danger">{emailError}</p>}
                 </div>
                 <div className="field">
                   <label className="label">Password</label>
@@ -68,11 +84,13 @@ const Login = () => {
                     <input
                       type="password"
                       className="input"
+                      name="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="******"
+                      placeholder="****"
                     />
                   </div>
+                  {passwordError && <p className="has-text-centered has-text-danger">{passwordError}</p>}
                 </div>
                 <div className="field mt-5">
                   <button

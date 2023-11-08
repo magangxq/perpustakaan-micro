@@ -30,6 +30,7 @@ const FormDeleteBook = () => {
         await axios.delete(`http://localhost:2000/books/${id}`)
         setIsMutating(false)
 
+        alert("Book has been successfully deleted")
         navigate("/books");
     }
 

@@ -18,7 +18,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async(user, thunkAPI
         return response.data;
     } catch (error) {
         if(error.response){
-            const message = "Gagal ! Email dan kata sandi salah";
+            const message = "Login failed! Incorrect email or password.";
             // const message = error.response.data.msg;
             return thunkAPI.rejectWithValue(message);
         }

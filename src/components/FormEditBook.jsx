@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import * as yup from 'yup';
 
 const FormEditBook = () => {
   const [titleEdit, setTitleEdit] = useState("");
@@ -18,6 +19,14 @@ const FormEditBook = () => {
   const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const validationSchema = yup.object().shape({
+    title: yup.string().required('Title is required'),
+    author: yup.string().required('Author is required'),
+    publisher: yup.string().required('Publisher is required'),
+    publication: yup.string().required('Publication Year is required'),
+    description: yup.string().required('Description is required'),
+  })
 
   useEffect(() => {
     const getBookById = async () => {
@@ -43,51 +52,55 @@ const FormEditBook = () => {
   const updateBook = async (e) => {
     e.preventDefault();
 
-    setTitleError("");
-    setAuthorError("");
-    setPublisherError("");
-    setPublicationError("");
-    setDescriptionError("");
-
-    if (!title) {
-      setTitleError("Title Harus di isi")
-      return;
-    }
-    if (!author) {
-      setAuthorError("Author Harus di isi")
-      return;
-    }
-    if (!publisher) {
-      setPublisherError("Publisher Harus di isi")
-      return;
-    }
-    if (!publication) {
-      setPublicationError("Publication Year Harus di isi")
-      return;
-    }
-    if (!description) {
-      setDescriptionError("Description Harus di isi")
-      return;
-    }
-
-    setIsMutating(true)
-
     try {
-      await axios.patch(`http://localhost:2000/books/${id}`, {
-        title: title,
-        author: author,
-        publisher: publisher,
-        publication_year: publication,
-        description: description,
-      });
-      
-      navigate("/books");
-    } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
+      await validationSchema.validate(
+        {
+          title,
+          author,
+          publisher,
+          publication,
+          description,
+        },
+        { abortEarly: false }
+      );
+
+      setTitleError('');
+      setAuthorError('');
+      setPublisherError('');
+      setPublicationError('');
+      setDescriptionError('');
+
+      setIsMutating(true)
+
+      try {
+        await axios.patch(`http://localhost:2000/books/${id}`, {
+          title: title,
+          author: author,
+          publisher: publisher,
+          publication_year: publication,
+          description: description,
+        });
+
+        navigate("/books");
+      } catch (error) {
+        if (error.response) {
+          setMsg(error.response.data.msg);
+        }
       }
+    } catch (error) {
+      const errorMessages = error.inner.reduce((messages, err) => {
+        messages[err.path] = err.message;
+        return messages;
+      }, {});
+
+      setTitleError(errorMessages.title || '');
+      setAuthorError(errorMessages.author || '');
+      setPublisherError(errorMessages.publisher || '');
+      setPublicationError(errorMessages.publication || '');
+      setDescriptionError(errorMessages.description || '');
+
+      setIsMutating(false)
     }
-    setIsMutating(false)
   };
 
   return (
@@ -95,8 +108,8 @@ const FormEditBook = () => {
       <h1 className="title">Books</h1>
       <h2 className="subtitle">Edit Book <label>{titleEdit}</label></h2>
       <Link to="/books" className="button is-danger mb-2">
-          Cancel
-        </Link>
+        Cancel
+      </Link>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
@@ -157,9 +170,12 @@ const FormEditBook = () => {
               <div className="field">
                 <label className="label">Description</label>
                 <div className="control">
-                  <input
+                  <textarea
                     type="text"
+                    cols={3}
+                    row={50}
                     className="input"
+                    style={{ height: '90px' }}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Description"
@@ -170,15 +186,15 @@ const FormEditBook = () => {
 
               <div className="field">
                 <div className="control">
-                {!isMutating ? (
-                  <button type="submit" className="button is-success">
-                    Update
-                  </button>
-                ) : (
-                  <button type="submit" className="button is-success">
-                    Updating...
-                  </button>
-                )}
+                  {!isMutating ? (
+                    <button type="submit" className="button is-success">
+                      Update
+                    </button>
+                  ) : (
+                    <button type="submit" className="button is-success">
+                      Updating...
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
