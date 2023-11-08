@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const FormEditProfile = () => {
     const [uuid, setUuid] = useState("");
-    const [user, setUser] = useState("");
     const [name, setName] = useState("");
+    const [nameError, setNameError] = useState("");
     const [msg, setMsg] = useState("");
     const [isMutating, setIsMutating] = useState(false);
     const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        const getBookById = async () => {
+        const getUserById = async () => {
             try {
                 const response = await axios.get(
                     `http://localhost:2000/user/profile`
                 );
                 setUuid(response.data.uuid);
-                setUser(response.data.name);
+                setName(response.data.name);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
                 }
             }
         };
-        getBookById();
+        getUserById();
     }, [uuid]);
 
     const updateBook = async (e) => {
         e.preventDefault();
 
         if(!name) {
-            setMsg("Kolom Harus diisi")
+            setNameError("Name is required")
             return;
         }
 
@@ -52,7 +54,7 @@ const FormEditProfile = () => {
     return (
         <div>
             <h1 className="title">Profile</h1>
-            <h2 className="subtitle">Edit Profile {user}</h2>
+            <h2 className="subtitle">Edit Profile {user && user.name}</h2>
             <Link to="/profile" className="button is-danger mb-2">
                 Cancel
             </Link>
@@ -72,6 +74,7 @@ const FormEditProfile = () => {
                                         placeholder="Name"
                                         />
                                 </div>
+                                <p className="has-text-centered has-text-danger">{nameError}</p>
                             </div>
                             <div className="field">
                                 <div className="control">

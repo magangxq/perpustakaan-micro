@@ -26,7 +26,7 @@ const Sidebar = () => {
               <IoHome /> Profile
             </NavLink>
           </li>
-          {user && user.registration_status !== "verifikasi" && (
+          {user && user.registration_status === "diterima" && (
             <li>
               <NavLink to={"/books"}>
                 <IoBook /> Books

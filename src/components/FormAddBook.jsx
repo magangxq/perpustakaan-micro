@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import * as yup from 'yup';
 
 const FormAddBook = () => {
   const [title, setTitle] = useState("");
@@ -17,35 +18,34 @@ const FormAddBook = () => {
   const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
 
+  const validationSchema = yup.object().shape({
+    title: yup.string().required('Title is required'),
+    author: yup.string().required('Author is required'),
+    publisher: yup.string().required('Publisher is required'),
+    publication: yup.string().required('Publication Year is required'),
+    description: yup.string().required('Description is required'),
+  });
+
   const saveProduct = async (e) => {
     e.preventDefault();
 
-    setTitleError("");
-    setAuthorError("");
-    setPublisherError("");
-    setPublicationError("");
-    setDescriptionError("");
+    try {
+      await validationSchema.validate(
+        {
+          title,
+          author,
+          publisher,
+          publication,
+          description,
+        },
+        { abortEarly: false }
+      );
 
-    if (!title) {
-      setTitleError("Title Harus di isi")
-      return;
-    }
-    if (!author) {
-      setAuthorError("Author Harus di isi")
-      return;
-    }
-    if (!publisher) {
-      setPublisherError("Publisher Harus di isi")
-      return;
-    }
-    if (!publication) {
-      setPublicationError("Publication Year Harus di isi")
-      return;
-    }
-    if (!description) {
-      setDescriptionError("Description Harus di isi")
-      return;
-    }
+      setTitleError('');
+      setAuthorError('');
+      setPublisherError('');
+      setPublicationError('');
+      setDescriptionError('');
 
     setIsMutating(true)
 
@@ -63,7 +63,20 @@ const FormAddBook = () => {
         setMsg(error.response.data.msg);
       }
     }
+  } catch (error) {
+    const errorMessages = error.inner.reduce((messages, err) => {
+      messages[err.path] = err.message;
+      return messages;
+    }, {});
+
+    setTitleError(errorMessages.title || '');
+    setAuthorError(errorMessages.author || '');
+    setPublisherError(errorMessages.publisher || '');
+    setPublicationError(errorMessages.publication || '');
+    setDescriptionError(errorMessages.description || '');
+    
     setIsMutating(false)
+  }
   };
 
   return (
@@ -133,9 +146,12 @@ const FormAddBook = () => {
               <div className="field">
                 <label className="label">Description</label>
                 <div className="control">
-                  <input
+                  <textarea
                     type="text"
+                    cols={3}
+                    row={50}
                     className="input"
+                    style={{height: '90px'}}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Description"

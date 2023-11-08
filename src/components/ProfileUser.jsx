@@ -49,7 +49,21 @@ const ProfileUser = () => {
                   </div>
                 </>
               )}
-              {user && user.registration_status !== "verifikasi" && (
+              {user && user.registration_status === "ditolak" && (
+                <>
+                  <div className="field">
+                    <label className="label has-text-white is-flex is-justify-content-center">Status: &nbsp;<label className="has-text-weight-semibold ">
+                      {user && user.registration_status}
+                    </label></label>
+                  </div>
+                  {/* <div className="field mt-5">
+                    <label className="has-text-weight-semibold is-flex is-justify-content-center">
+                      Your Account Is Still In The Verification Stage,<br />Wait Until The Admin Approves Your Registration Request
+                    </label>
+                  </div> */}
+                </>
+              )}
+              {user && user.registration_status !== "verifikasi" && user.registration_status !== "ditolak" && (
                 <div className="is-flex is-justify-content-center">
                   <Link
                     to={`/profile/edit`}

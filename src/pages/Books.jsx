@@ -19,7 +19,7 @@ const Books = () => {
       navigate("/");
     }
 
-    if (user && user.registration_status === "verifikasi") {
+    if (user && user.registration_status !== "diterima") {
       navigate("/profile");
     }
   }, [isError, user, navigate]);
