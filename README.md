@@ -7,7 +7,7 @@ To install the project, follow these steps:
 git clone -b backend https://github.com/magangxq/perpustakaan-micro.git
 ```
 2. Install the dependencies:
-```
+```==
 npm install
 ```
 3. Create a database in PostgreSQL and configure it in the config/Database.js file:

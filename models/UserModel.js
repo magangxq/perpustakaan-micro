@@ -46,6 +46,14 @@ const Users = db.define(
         notEmpty: true,
       },
     },
+    picture: {
+      type: DataTypes.BLOB,
+      defaultValue: null,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+      },
+    },
     registration_status: {
       type: DataTypes.STRING,
       allowNull: false,

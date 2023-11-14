@@ -27,7 +27,7 @@ const Books = db.define(
       type: DataTypes.BLOB,
       allowNull: true,
       validate: {
-        notEmpty: true,
+        notEmpty: false,
       },
     },
     title: {

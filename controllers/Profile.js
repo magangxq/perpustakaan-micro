@@ -1,11 +1,12 @@
 import User from "../models/UserModel.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export const Profile = async (req, res) =>{
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun Anda!"});
     }
     const user = await User.findOne({
-        attributes:['uuid','name','email','nik_nis', 'registration_status','role'],
+        attributes:['uuid','name','email','nik_nis', 'registration_status', 'role', 'picture'],
         where: {
             uuid: req.session.userId
         }
@@ -33,5 +34,29 @@ export const editProfile = async(req, res) =>{
         res.status(200).json({msg: "Name Updated"});
     } catch (error) {
         res.status(400).json({msg: error.message});
+    }
+}
+
+export const uploadProfilePicture = async (req, res) => {
+    try {
+        const userUuid = req.session.userId;
+
+        // Find the user based on the session UUID
+        const user = await User.findOne({
+            where: { uuid: userUuid },
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: 'Pengguna tidak ditemukan.' });
+        }
+
+        // Save the profile picture to the 'picture' column of the user
+        user.picture = req.file.buffer;
+        await user.save();
+
+        return res.json({ success: true, message: 'Gambar profil berhasil diunggah.' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Terjadi kesalahan saat mengunggah gambar profil.' });
     }
 }
