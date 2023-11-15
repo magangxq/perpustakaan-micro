@@ -18,7 +18,6 @@ const Sidebar = () => {
   return (
     <div>
       <aside className="menu pl-2 has-shadow">
-
         <p className="menu-label">General</p>
         <ul className="menu-list is-align-items-center">
           <li>
