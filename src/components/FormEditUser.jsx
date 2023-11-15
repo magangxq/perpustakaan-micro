@@ -35,7 +35,8 @@ const FormEditUser = () => {
       navigate("/users");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg("Invalid Switch Role Account");
+        // setMsg(error.response.data.msg);
       }
     }
     setIsMutating(false);

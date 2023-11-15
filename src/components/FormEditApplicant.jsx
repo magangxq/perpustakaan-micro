@@ -27,7 +27,7 @@ const FormEditApplicant = () => {
 
   const updateApplicant = async (e) => {
     e.preventDefault();
-    setIsMutating(true)
+    setIsMutating(true);
     try {
       await axios.patch(`http://localhost:2000/member-applicant/${id}`, {
         registration_status: status,
@@ -35,18 +35,19 @@ const FormEditApplicant = () => {
       navigate("/applicants");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        setMsg("Invalid Switch Status Account");
+        // setMsg(error.response.data.msg);
       }
     }
-    setIsMutating(false)
+    setIsMutating(false);
   };
   return (
     <div>
       <h1 className="title">Applicants</h1>
       <h2 className="subtitle">Update Registration Status {name}</h2>
       <Link to="/applicants" className="button is-danger mb-2">
-          Cancel
-        </Link>
+        Cancel
+      </Link>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
@@ -69,14 +70,14 @@ const FormEditApplicant = () => {
               </div>
               <div className="field">
                 <div className="control">
-                {!isMutating ? (
-                  <button type="submit" className="button is-success">
-                    Update
-                  </button>
+                  {!isMutating ? (
+                    <button type="submit" className="button is-success">
+                      Update
+                    </button>
                   ) : (
                     <button type="submit" className="button is-success">
-                    Updating...
-                  </button>
+                      Updating...
+                    </button>
                   )}
                 </div>
               </div>
