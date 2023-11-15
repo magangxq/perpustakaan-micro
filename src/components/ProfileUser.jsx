@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import userImage from "../image/user.jpg"
 
 const ProfileUser = () => {
+  const [imageSrc, setImageSrc] = useState(null);
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    getPicture();
+  }, []);
+
+  const getPicture = async () => {
+    axios.get("http://localhost:2000/user/profile")
+      .then(response => {
+        if (response.data && response.data.picture) {
+          // console.log(response.data.picture);
+          const imageUrl = response.data.picture;
+          setImageSrc(imageUrl)
+        } else {
+          // console.log('Data picture tidak ditemukan dalam response.');
+          setImageSrc(false)
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      })
+  }
 
   return (
     <div className="container" >
@@ -15,6 +39,15 @@ const ProfileUser = () => {
         <div className="column is-half">
           <div className="box has-background-primary">
             <div className="content ">
+              <div className="field has-text-white is-flex is-justify-content-center">
+                <figure className="image is-128x128">
+                  {imageSrc === false ? (
+                    <img className="is-rounded" src={userImage} alt="user profile" />
+                  ) : (
+                    <img className="is-rounded" src={imageSrc} alt="user profile" />
+                  )}
+                </figure>
+              </div>
               <div className="field has-text-white is-flex is-justify-content-center">
                 <label className="label has-text-white ">Name: &nbsp;<label className="has-text-weight-semibold">
                   {user && user.name}
@@ -63,7 +96,7 @@ const ProfileUser = () => {
                   </div> */}
                 </>
               )}
-              {user && user.registration_status !== "verifikasi" && user.registration_status !== "ditolak" && (
+              {user && user.registration_status === "diterima" && (
                 <div className="is-flex is-justify-content-center">
                   <Link
                     to={`/profile/edit`}
