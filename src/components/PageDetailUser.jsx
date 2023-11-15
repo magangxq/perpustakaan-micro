@@ -20,6 +20,7 @@ const PageDetailUser = () => {
                 setEmail(response.data.email);
                 setRole(response.data.role);
                 setStatus(response.data.registration_status);
+                // console.log(response.data)
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
