@@ -4,11 +4,13 @@ import { useNavigate, Link } from "react-router-dom";
 import * as yup from 'yup';
 
 const FormAddBook = () => {
+  const [cover, setCover] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
   const [publication, setPublication] = useState("");
   const [description, setDescription] = useState("");
+  const [coverError, setCoverError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [authorError, setAuthorError] = useState("");
   const [publisherError, setPublisherError] = useState("");
@@ -19,6 +21,7 @@ const FormAddBook = () => {
   const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
+    cover: yup.string().required('Cover is requirerd'),
     title: yup.string().required('Title is required'),
     author: yup.string().required('Author is required'),
     publisher: yup.string().required('Publisher is required'),
@@ -32,6 +35,7 @@ const FormAddBook = () => {
     try {
       await validationSchema.validate(
         {
+          cover,
           title,
           author,
           publisher,
@@ -41,6 +45,7 @@ const FormAddBook = () => {
         { abortEarly: false }
       );
 
+      setCoverError('');
       setTitleError('');
       setAuthorError('');
       setPublisherError('');
@@ -51,6 +56,7 @@ const FormAddBook = () => {
 
     try {
       await axios.post("http://localhost:2000/books", {
+        cover: cover,
         title: title,
         author: author,
         publisher: publisher,
@@ -69,6 +75,7 @@ const FormAddBook = () => {
       return messages;
     }, {});
 
+    setCoverError(errorMessages.cover || '');
     setTitleError(errorMessages.title || '');
     setAuthorError(errorMessages.author || '');
     setPublisherError(errorMessages.publisher || '');
@@ -91,6 +98,20 @@ const FormAddBook = () => {
           <div className="content">
             <form onSubmit={saveProduct}>
               <p className="has-text-centered has-text-danger">{msg}</p>
+              <div className="field">
+                <label className="label">Cover</label>
+                <div className="control">
+                  <input
+                    type="file"
+                    className="input"
+                    accept="image/*"
+                    value={cover}
+                    onChange={(e) => setCover(e.target.value)}
+                    placeholder="Cover"
+                  />
+                </div>
+                {coverError && <p className="has-text-centered has-text-danger">{coverError}</p>}
+              </div>
               <div className="field">
                 <label className="label">Title</label>
                 <div className="control">
