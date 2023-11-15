@@ -6,17 +6,36 @@ import { IoSearch } from "react-icons/io5";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  // const [imageSrc, setImageSrc] = useState(null);
   const [filterBook, setFilterBook] = useState("");
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     getBooks();
+    // getCover();
   }, []);
 
   const getBooks = async () => {
     const response = await axios.get("http://localhost:2000/books");
     setBooks(response.data);
   };
+
+  // const getCover = async () => {
+  //   axios.get("http://localhost:2000/books")
+  //     .then(response => {
+  //       if (response.data && response.data.cover) {
+  //         const blob = new Blob([response.data.cover], {type: 'image/jpeg'});
+  //         const imageUrl = URL.createObjectURL(blob);
+  //         setImageSrc(imageUrl)
+  //       } else {
+  //         console.error('Data cover tidak ditemukan dalam response.')
+  //       } 
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     })
+
+  // }
 
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(filterBook.toLowerCase())
@@ -36,14 +55,20 @@ const BookList = () => {
         )}
 
         <div className="is-flex is-align-items-center mb-2 mr-5">
-          <input
-            type="text"
-            className="p-2 mr-1 is-rounded"
-            placeholder="Filter by Title"
-            value={filterBook}
-            onChange={(e) => setFilterBook(e.target.value)}
-          />
-          <IoSearch style={{fontSize: "30px"}}/>
+          <div className="panel-block">
+            <p className="control has-icons-left">
+              <input
+                className="input" 
+                type="search" 
+                placeholder="Filter by Title"
+                value={filterBook}
+                onChange={(e) => setFilterBook(e.target.value)} 
+                />
+              <span className="icon is-left">
+              <IoSearch/>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -51,9 +76,10 @@ const BookList = () => {
         <thead>
           <tr>
             <th>No</th>
+            <th>Cover</th>
             <th>Title</th>
             <th>Author</th>
-            <th>Publisher</th>
+            {/* <th>Publisher</th> */}
             <th>Book Status</th>
             <th>Actions</th>
           </tr>
@@ -62,9 +88,11 @@ const BookList = () => {
           {filteredBooks.map((book, index) => (
             <tr key={book.id}>
               <td>{index + 1}</td>
+              <td><img src={book.cover} style={{ width: '100px', height: '100px' }} alt="Cover Book" /></td>
+              {/* <td>{imageSrc && <img src={imageSrc} alt="Cover"/>}</td> */}
               <td>{book.title}</td>
               <td>{book.author}</td>
-              <td>{book.publisher}</td>
+              {/* <td>{book.publisher}</td> */}
               <td>{book.book_status}</td>
               <td>
                 <div>

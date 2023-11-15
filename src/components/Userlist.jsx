@@ -30,30 +30,39 @@ const Userlist = () => {
       <h1 className="title">Users</h1>
       <h2 className="subtitle">List of Users</h2>
       <div className="is-flex is-justify-content-space-between">
-        <div className="mb-2">
-        <label>Role : </label>
-          <select
-            className="p-1"
-            value={filterRole}
-            onChange={(e) => setFilterRole(e.target.value)}
-          >
-            {roleOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div className="is-flex is-align-items-center mb-2">
+          <div className="panel-block">
+            <label>Role : &nbsp;</label>
+            <select
+              className="p-2"
+              value={filterRole}
+              onChange={(e) => setFilterRole(e.target.value)}
+            >
+              {roleOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="is-flex is-align-items-center mb-2">
-          <input
-            type="text"
-            className="p-1 mr-1 is-rounded"
-            placeholder="Filter by Name"
-            value={filterUser}
-            onChange={(e) => setFilterUser(e.target.value)}
-          />
-          <IoSearch style={{ fontSize: "25px" }} />
+          <div className="panel-block">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="search"
+                placeholder="Filter by Name"
+                value={filterUser}
+                onChange={(e) => setFilterUser(e.target.value)}
+              />
+              <span className="icon is-left">
+                <IoSearch />
+              </span>
+            </p>
+          </div>
+
         </div>
       </div>
       <table className="table is-striped is-fullwidth">
