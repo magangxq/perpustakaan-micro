@@ -57,7 +57,7 @@ const Users = db.define(
     registration_status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "verifikasi",
+      defaultValue: "menunggu-verifikasi",
       validate: {
         notEmpty: true,
       },
@@ -68,6 +68,13 @@ const Users = db.define(
       defaultValue: "anggota",
       validate: {
         notEmpty: true,
+      },
+    },
+    information: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
       },
     },
   },

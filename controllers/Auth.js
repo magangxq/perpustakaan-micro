@@ -8,7 +8,7 @@ export const Login = async (req, res) =>{
             email: req.body.email
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
+    if(!user) return res.status(404).json({msg: "User not found"});
     const match = await argon2.verify(user.password, req.body.password);
     if(!match) return res.status(400).json({msg: "Wrong Password"});
     req.session.userId = user.uuid;
@@ -32,11 +32,11 @@ export const Register = async (req, res) => {
     });
 
     if (existingUser) {
-        return res.status(400).json({ msg: "Email atau NIK/NIS sudah terdaftar" });
+        return res.status(400).json({ msg: "Email or NIK/NIS has already registered" });
     }
 
     if (password !== confPassword) {
-        return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
+        return res.status(400).json({ msg: "Password and Confirm Password doesn't match" });
     }
 
     const hashPassword = await argon2.hash(password);
@@ -47,7 +47,7 @@ export const Register = async (req, res) => {
             password: hashPassword,
             nik_nis: nik_nis
         });
-        res.status(201).json({ msg: "Register Berhasil" });
+        res.status(201).send("Success Register");
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
@@ -55,7 +55,7 @@ export const Register = async (req, res) => {
 
 export const logOut = (req, res) =>{
     req.session.destroy((err)=>{
-        if(err) return res.status(400).json({msg: "Tidak dapat logout"});
-        res.status(200).json({msg: "Anda telah logout"});
+        if(err) return res.status(400).send("Error: Can't Logout");
+        res.status(200).send("You have been Logout..");
     });
 }

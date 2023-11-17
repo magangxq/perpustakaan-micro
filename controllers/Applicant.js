@@ -3,9 +3,9 @@ import User from "../models/UserModel.js";
 export const getMemberApplicant = async(req, res) =>{
     try {
         const response = await User.findAll({
-            attributes:['id','uuid','name','email', 'nik_nis', 'registration_status', 'role'],
+            attributes:['id','uuid','name','email', 'nik_nis', 'registration_status', 'role', 'information'],
             where: {
-                registration_status: 'verifikasi'
+                registration_status: 'menunggu-verifikasi'
             }
         });
         res.status(200).json(response);
@@ -17,7 +17,7 @@ export const getMemberApplicant = async(req, res) =>{
 export const getMemberApplicantById = async(req, res) =>{
     try {
         const response = await User.findOne({
-            attributes:['id','uuid','name','email', 'nik_nis', 'registration_status', 'role'],
+            attributes:['id','uuid','name','email', 'nik_nis', 'registration_status', 'role', 'information'],
             where: {
                 id: req.params.id
             }
@@ -35,10 +35,11 @@ export const updateRegStatus = async(req, res) =>{
         }
     });
     if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    const {registration_status} = req.body;
+    const {registration_status, information} = req.body;
     try {
         await User.update({
-            registration_status: registration_status
+            registration_status: registration_status,
+            information: information
         },{
             where:{
                 id: user.id

@@ -4,15 +4,15 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const Profile = async (req, res) =>{
     if(!req.session.userId){
-        return res.status(401).json({msg: "Mohon login ke akun Anda!"});
+        return res.status(401).json({msg: "Please LogIn first!"});
     }
     const user = await User.findOne({
-        attributes:['uuid','name','email','nik_nis', 'registration_status', 'role', 'picture'],
+        attributes:['uuid','name','email','nik_nis', 'registration_status', 'role', 'picture', 'information'],
         where: {
             uuid: req.session.userId
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
+    if(!user) return res.status(404).json({msg: "User not found"});
     res.status(200).json(user);
 }
 
@@ -22,7 +22,7 @@ export const editProfile = async(req, res) =>{
             uuid: req.params.id
         }
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
+    if(!user) return res.status(404).json({msg: "User not found"});
     const {name} = req.body;
     try {
         await User.update({
@@ -48,7 +48,7 @@ export const uploadImage = async (req, res) => {
       });
   
       if (!user) {
-        return res.status(404).json({ error: 'Pengguna tidak ditemukan.' });
+        return res.status(404).json({ error: 'User not found' });
       }
   
       cloudinary.uploader.upload(req.file.path, { folder: `project-perpus/users-picture` }, async function (err, result) {
@@ -65,13 +65,13 @@ export const uploadImage = async (req, res) => {
   
         return res.json({
           success: true,
-          message: 'Gambar profil berhasil diunggah.',
+          message: 'Success upload profile picture.',
           data: result
         });
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: 'Terjadi kesalahan saat mengunggah gambar profil.' });
+      return res.status(500).json({ error: 'An error occurred while uploading the profile picture.' });
     }
   };
   

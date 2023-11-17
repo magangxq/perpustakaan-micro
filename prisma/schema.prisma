@@ -16,7 +16,7 @@ model users{
   email String @unique
   password String
   nik_nis Int @unique
-  registration_status String @default("verifikasi")
+  registration_status String @default("menunggu-verifikasi")
   role String @default("anggota")
   createdAt DateTime
   updatedAt DateTime

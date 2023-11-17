@@ -46,7 +46,7 @@ export const getBookById = async(req, res) =>{
                 'information'
             ],
         });
-        if(!book) return res.status(404).json({msg: "Data tidak ditemukan"});
+        if(!book) return res.status(404).json({msg: "Data not found"});
         res.status(200).json(book);
     } catch (error) {
         res.status(500).json({msg: error.message});
@@ -129,7 +129,7 @@ export const updateBook = async(req, res) =>{
                 id: req.params.id
             }
         });
-        if(!book) return res.status(404).json({msg: "Data tidak ditemukan"});
+        if(!book) return res.status(404).json({msg: "Data not found"});
         const {
             code,
             cover,
@@ -159,7 +159,7 @@ export const deleteBook = async(req, res) =>{
                 id: req.params.id
             }
         });
-        if(!book) return res.status(404).json({msg: "Data tidak ditemukan"});
+        if(!book) return res.status(404).json({msg: "Data not found"});
         await Book.destroy({
             where:{
                 id: book.id
