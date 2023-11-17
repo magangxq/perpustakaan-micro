@@ -24,7 +24,7 @@ const Books = db.define(
       },
     },
     cover: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true,
       validate: {
         notEmpty: false,

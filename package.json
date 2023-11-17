@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cloudinary/url-gen": "^1.13.0",
     "@prisma/client": "^5.5.2",
     "argon2": "^0.28.7",
     "bcrypt": "^5.1.1",

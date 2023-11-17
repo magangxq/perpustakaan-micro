@@ -1,5 +1,6 @@
 import User from "../models/UserModel.js";
 import { v4 as uuidv4 } from 'uuid';
+import cloudinary from "../utils/cloudinary.js";
 
 export const Profile = async (req, res) =>{
     if(!req.session.userId){
@@ -37,26 +38,40 @@ export const editProfile = async(req, res) =>{
     }
 }
 
-export const uploadProfilePicture = async (req, res) => {
+export const uploadImage = async (req, res) => {
     try {
-        const userUuid = req.session.userId;
-
-        // Find the user based on the session UUID
-        const user = await User.findOne({
-            where: { uuid: userUuid },
-        });
-
-        if (!user) {
-            return res.status(404).json({ error: 'Pengguna tidak ditemukan.' });
+      const userUuid = req.session.userId;
+  
+      // Find the user based on the session UUID
+      const user = await User.findOne({
+        where: { uuid: userUuid },
+      });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'Pengguna tidak ditemukan.' });
+      }
+  
+      cloudinary.uploader.upload(req.file.path, { folder: `project-perpus/users-picture` }, async function (err, result) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            success: false,
+            message: err
+          });
         }
-
-        // Save the profile picture to the 'picture' column of the user
-        user.picture = req.file.buffer;
+  
+        user.picture = result.secure_url;
         await user.save();
-
-        return res.json({ success: true, message: 'Gambar profil berhasil diunggah.' });
+  
+        return res.json({
+          success: true,
+          message: 'Gambar profil berhasil diunggah.',
+          data: result
+        });
+      });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Terjadi kesalahan saat mengunggah gambar profil.' });
+      console.error(error);
+      return res.status(500).json({ error: 'Terjadi kesalahan saat mengunggah gambar profil.' });
     }
-}
+  };
+  

@@ -47,7 +47,7 @@ const Users = db.define(
       },
     },
     picture: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       defaultValue: null,
       allowNull: true,
       validate: {

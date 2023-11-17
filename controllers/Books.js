@@ -1,5 +1,6 @@
 import Book from "../models/BookModel.js";
 import sequelize from "sequelize";
+import cloudinary from "../utils/cloudinary.js";
 import User from "../models/UserModel.js"
 import {Op} from "sequelize";
 
@@ -55,12 +56,9 @@ export const getBookById = async(req, res) =>{
 
 export const createBook = async (req, res) => {
     try {
-      // Generate kode buku custom
       const customBookCode = await generateCustomBookCode();
   
-      // Dapatkan data dari body request
       const {
-        cover,
         title,
         author,
         publisher,
@@ -70,21 +68,33 @@ export const createBook = async (req, res) => {
         information,
       } = req.body;
   
-      // Simpan buku ke dalam database
-      const newBook = await Book.create({
-        code: customBookCode,
-        cover: cover,
-        title: title,
-        author: author,
-        publisher: publisher,
-        publication_year: publication_year,
-        description: description,
-        book_status: book_status,
-        information: information,
-      });
+      cloudinary.uploader.upload(req.file.path, { folder: `project-perpus/books-cover` }, async function (err, result) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            success: false,
+            message: err
+          });
+        }
   
-      res.status(201).json({ msg: "Book Created Successfully", book: newBook });
+        const coverUrl = result.secure_url;
+  
+        const newBook = await Book.create({
+          code: customBookCode,
+          title: title,
+          author: author,
+          publisher: publisher,
+          publication_year: publication_year,
+          description: description,
+          book_status: book_status,
+          information: information,
+          cover: coverUrl
+        });
+  
+        res.status(201).json({ msg: "Book Created Successfully", book: newBook });
+      });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ msg: error.message });
     }
   };
@@ -160,6 +170,8 @@ export const deleteBook = async(req, res) =>{
         res.status(500).json({msg: error.message});
     }
 }
+
+
 
 //--- id - code - cover - title - author 
 // - publisher - publication_year 
