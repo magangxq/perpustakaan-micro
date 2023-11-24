@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^14.3.0",
     "axios": "^0.27.2",
     "bulma": "^0.9.4",
+    "cloudinary-core": "^2.13.0",
+    "cloudinary-react": "^1.8.1",
     "formik": "^2.4.5",
     "formik-yup": "^0.0.5",
     "react": "^18.2.0",

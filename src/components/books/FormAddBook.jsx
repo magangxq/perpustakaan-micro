@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import API from "../../utils/api";
 
 const FormAddBook = () => {
-  const [cover, setCover] = useState("");
+  const [cover, setCover] = useState(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
@@ -30,16 +30,6 @@ const FormAddBook = () => {
     description: yup.string().required('Description is required'),
   });
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const base64String = reader.result.split(",")[1];
-  //     setCover(base64String);
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-
   const saveProduct = async (e) => {
     e.preventDefault();
 
@@ -57,16 +47,15 @@ const FormAddBook = () => {
         { abortEarly: false }
       );
 
-      const dataToSend = {
-        cover: cover,
-        title: title,
-        author: author,
-        publisher: publisher,
-        publication_year: publication,
-        description: description,
-      };
+      const dataToSend = new FormData ();
+      dataToSend.append('title', title);
+      dataToSend.append('author', author);
+      dataToSend.append('publisher', publisher);
+      dataToSend.append('publication_year', publication);
+      dataToSend.append('description', description);
+      dataToSend.append('bookCover', cover);
 
-      console.log(dataToSend)
+      // console.log(dataToSend)
       await axios.post(API.ADD_BOOK_URL, dataToSend);
       navigate("/books");
     } catch (error) {
