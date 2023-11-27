@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
+    <div style={{ position: "fixed", top: 60, bottom: 0, left: 0, width: "200px", overflowY: "auto"/*, paddingTop: "10vh"*/ }}>
       <aside className="menu pl-2 has-shadow">
         <p className="menu-label">General</p>
         <ul className="menu-list is-align-items-center">
