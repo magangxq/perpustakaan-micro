@@ -38,9 +38,9 @@ export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
     }
 });
 
-export const LogOut = createAsyncThunk(API.LOGOUT_URL, async(thunkAPI) => {
+export const LogOut = createAsyncThunk('user/LogOut', async(thunkAPI) => {
     try {
-        const response = await axios.delete('http://localhost:2000/auth/logout'); 
+        const response = await axios.delete(API.LOGOUT_URL); 
         return response.data;
     } catch (error) {
         if(error.response) {
