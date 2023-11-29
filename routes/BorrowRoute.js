@@ -17,6 +17,4 @@ router.get('/borrow-returned/:id', verifyUser, regStatus, pustakawan, getBorrowR
 router.post('/borrow', verifyUser, regStatus, createRequest);
 router.get('/history', verifyUser, regStatus, getUserBorrowHistory);
 
-
-
 export default router;
