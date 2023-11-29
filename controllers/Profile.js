@@ -71,7 +71,7 @@ export const uploadImage = async (req, res) => {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: 'An error occurred while uploading the profile picture.' });
+      return res.status(500).json({ error: 'An error occurred while uploading the profile picture.', error });
     }
   };
   

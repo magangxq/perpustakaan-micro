@@ -22,8 +22,8 @@ async function main() {
         email: "dev@developer.com",
         password: await hashPassword('dev'),
         nik_nis: 1,
-        registration_status: "diterima",
-        role: "developer",
+        registration_status: "Verified",
+        role: "Developer",
         createdAt: now,
         updatedAt: now
     },
@@ -34,8 +34,8 @@ async function main() {
         email: "admin@example.com",
         password: await hashPassword('admin'),
         nik_nis: 2,
-        registration_status: "diterima",
-        role: "admin",
+        registration_status: "Verified",
+        role: "Admin",
         createdAt: now,
         updatedAt: now
     },
@@ -46,8 +46,8 @@ async function main() {
         email: "pustakawan@example.com",
         password: await hashPassword('pustakawan'),
         nik_nis: 3,
-        registration_status: "diterima",
-        role: "pustakawan",
+        registration_status: "Verified",
+        role: "Librarian",
         createdAt: now,
         updatedAt: now
     },
@@ -58,7 +58,7 @@ async function main() {
         email: "user1@example.com",
         password: await hashPassword('user1'),
         nik_nis: 111,
-        registration_status: "diterima",
+        registration_status: "Verified",
         createdAt: now,
         updatedAt: now
     },
@@ -69,7 +69,7 @@ async function main() {
         email: "user2@example.com",
         password: await hashPassword('user2'),
         nik_nis: 222,
-        registration_status: "diterima",
+        registration_status: "Verified",
         createdAt: now,
         updatedAt: now
     },
@@ -80,7 +80,7 @@ async function main() {
         email: "user3@example.com",
         password: await hashPassword('user3'),
         nik_nis: 333,
-        registration_status: "diterima",
+        registration_status: "Verified",
         createdAt: now,
         updatedAt: now
     },

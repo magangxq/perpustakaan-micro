@@ -9,6 +9,7 @@ import BookRoute from "./routes/BookRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import ProfileRoute from "./routes/ProfileRoute.js";
 import ApplicantRoute from "./routes/ApplicantRoute.js";
+import BorrowRoute from "./routes/BorrowRoute.js"
 dotenv.config();
 
 const app = express();
@@ -47,6 +48,7 @@ app.use("/member-list", UserRoute);
 app.use(BookRoute);
 app.use("/auth", AuthRoute);
 app.use(ApplicantRoute);
+app.use(BorrowRoute)
 
 // store.sync();
 

@@ -16,8 +16,8 @@ model users{
   email String @unique
   password String
   nik_nis Int @unique
-  registration_status String @default("menunggu-verifikasi")
-  role String @default("anggota")
+  registration_status String @default("waiting-verification")
+  role String @default("Member")
   createdAt DateTime
   updatedAt DateTime
 }
@@ -29,11 +29,17 @@ model book{
   publisher String
   publication_year DateTime @db.Date
   description String
-  book_status String @default("tersedia")
+  book_status String @default("Available")
   information String?
   createdAt DateTime
   updatedAt DateTime
 }
+model borrow{
+  borrow_id Int @id @default(autoincrement())
+  code String
+  borrowing_status String
+  borrow_date DateTime @db.Date
+  due_date DateTime @db.Date
+  returned_date DateTime @db.Date
 
-
-
+}

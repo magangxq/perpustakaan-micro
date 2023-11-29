@@ -1,80 +1,70 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
+import Users from "./UserModel.js";
+import Books from "./BookModel.js";
 
 const { DataTypes } = Sequelize;
 
-const Users = db.define(
-  "users",
+const Borrows = db.define(
+  "borrow",
   {
-    uuid: {
-      type: DataTypes.STRING,
-      defaultValue: DataTypes.UUIDV4,
+    borrowing_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [3, 100],
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: true,
-        isEmail: true,
-      },
-    },
-    password: {
+    code: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    nik_nis: {
+    borrowing_status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Borrowed",
+      validate: {
+        notEmpty: true,
+      },
+    },
+    borrow_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    due_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    returned_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+      },
+    },
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: true,
       },
     },
-    picture: {
-      type: DataTypes.STRING,
-      defaultValue: null,
-      allowNull: true,
-      validate: {
-        notEmpty: false,
-      },
-    },
-    registration_status: {
-      type: DataTypes.STRING,
+    bookId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: "waiting-verification",
       validate: {
         notEmpty: true,
-      },
-    },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "Member",
-      validate: {
-        notEmpty: true,
-      },
-    },
-    information: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        notEmpty: false,
       },
     },
   },
@@ -83,4 +73,8 @@ const Users = db.define(
   }
 );
 
-export default Users;
+// Associations
+Borrows.belongsTo(Users, { foreignKey: 'userId' });
+Borrows.belongsTo(Books, { foreignKey: 'bookId' });
+
+export default Borrows;

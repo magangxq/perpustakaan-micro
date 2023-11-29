@@ -68,7 +68,7 @@ const Books = db.define(
     book_status: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "tersedia",
+      defaultValue: "Available",
       validate: {
         notEmpty: true,
       },

@@ -6,7 +6,7 @@ export const getUsers = async(req, res) =>{
         const response = await User.findAll({
             attributes:['id', 'uuid','name','email','role'],
             where: {
-                registration_status: 'diterima'
+                registration_status: 'Verified'
             }
         });
         res.status(200).json(response);
@@ -54,9 +54,10 @@ export const updateRole = async(req, res) =>{
     });
     if(!user) return res.status(404).json({msg: "User not found"});
     const {role} = req.body;
-    // if (user.uuid === req.user.uuid) {
-    //     return res.status(403).json({ msg: "Anda tidak dapat mengubah peran Anda sendiri" });
-    // }
+    
+    if (user.uuid === req.session.userId) {
+        return res.status(403).json({ msg: "You cannot change your own Role" });
+    }
     try {
         await User.update({
             role: role
