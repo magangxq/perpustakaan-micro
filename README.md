@@ -7,20 +7,37 @@ To install the project, follow these steps:
 git clone -b backend https://github.com/magangxq/perpustakaan-micro.git
 ```
 2. Install the dependencies:
-```==
+```
 npm install
 ```
-3. Create a database in PostgreSQL and configure it in the config/Database.js file:
-``` JavaScript
-const db = new Sequelize('yourdatabase', 'user', 'password', {
-  host: 'localhost',
-  dialect: 'postgresql',
-});
-```
+3. Create a database in PostgreSQL
+
 4. Create a new file named `.env` at root path then copy and paste code from `.env.dev` to `.env`. Then setup your Database URL in `.env`
+```
+// server port
+APP_PORT = 2000
+
+// your random secret key
+SESS_SECRET = 
+
+// prisma seeder database URL
+DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/yourdatabase"
+
+// cloudinary 
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_SECRET_KEY=
+
+// main database URL
+PG_DB=""
+PG_USER=""
+PG_PW=""
+
+```
 5. Migrate the seed data:
 ```
-npm run migrate-model
+1. npm run migrate-model
+2. npm run migrate-borrow
 ```
 6. Migrate the seed data: 
 ```
@@ -62,6 +79,17 @@ The API methods for the Perpustakaan backend are as follows:
 - PATCH `/books/:id` : Update the details of a specific book.
 - DEL `/books/:id` : Delete a book.
 
+**Management Borrowing Books**
+- GET `/borrow` : Get a list of all borrowed books.
+- GET `/borrow/:id` : Get the details of a specific borrowed book.
+- GET `/borrow-returned` : Get a returned book
+- GET `/borrow-returned/:id` : Get the details os a specific returned book
+- PATCH `/borrow/:id` : Return a borrowed book to its owner.
+
+**Borrowing Books**
+- POST `/borrow` : Post a request to borrow a book
+- GET `/history` : Get a history of borrowed books
+
 
 ## Folder Structure
 ```
@@ -72,14 +100,20 @@ perpustakaan
 │   ├── Applicant.js
 │   ├── Auth.js
 │   ├── Books.js
+│   ├── Borrow.js
+│   ├── BorrowHistory.js
 │   ├── Profile.js
 │   └── Users.js
 ├── middleware
-│   └── AuthUser.js
+│   ├── AuthUser.js
+│   └── multer.js
 ├── models
 │   ├── BookModel.js
+│   ├── BorrowModel.js
+│   ├── MigrateAssociation.js
+│   ├── MigrateModel.js
 │   └── UserModel.js
-├── node_modules
+├── node_modules/
 ├── prisma
 │   ├── schema.prisma
 │   ├── seedBook.js
@@ -88,8 +122,11 @@ perpustakaan
 │   ├── ApplicantRoute.js
 │   ├── AuthRoute.js
 │   ├── BookRoute.js
+│   ├── BorrowRoute.js
 │   ├── ProfileRoute.js
 │   └── UserRoute.js
+├── utils
+│   └── cloudinary.js
 ├── .env
 ├── .env.dev
 ├── .gitignore
