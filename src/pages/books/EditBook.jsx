@@ -8,7 +8,7 @@ import { getMe } from "../../features/authSlice";
 const EditBook = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isError } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMe());
@@ -18,7 +18,11 @@ const EditBook = () => {
     if (isError) {
       navigate("/");
     }
-  }, [isError, navigate]);
+
+    if (user && user.role !== "Member") {
+      navigate("/profile");
+    }
+  }, [isError, user,  navigate]);
   return (
     <Layout>
       <FormEditBook />

@@ -31,61 +31,58 @@ const BookList = () => {
     <div>
       <h1 className="title">Books</h1>
       <h2 className="subtitle">List of Books</h2>
-      {user && user.role === "anggota" ? (
+      {user && user.role === "Member" ? (
         <>
-        <div className="is-flex is-justify-content-space-between">
-          <div className="is-flex is-align-items-center mb-2 mr-5">
-            <div className="panel-block">
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  type="search"
-                  placeholder="Filter by Title"
-                  value={filterBook}
-                  onChange={(e) => setFilterBook(e.target.value)}
-                />
-                <span className="icon is-left">
-                  <IoSearch />
-                </span>
-              </p>
+          <div className="is-flex is-justify-content-space-between is-align-items-center">
+            <div className="is-flex is-align-items-center mb-2 mr-5">
+              <div className="panel-block">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="search"
+                    placeholder="Filter by Title"
+                    value={filterBook}
+                    onChange={(e) => setFilterBook(e.target.value)}
+                  />
+                  <span className="icon is-left">
+                    <IoSearch />
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="columns is-multiline is-2">
-            {filteredBooks.map((book, index) => (
+          
+          <div className="columns is-multiline is-2">
+            {filteredBooks.map((book) => (
               <div key={book.id} className="column is-one-fourth">
-              <Link to={`/books/detail/${book.id}`}>
-                <div className="card" style={{ height: '400px', width: '240px'}}>
-                  <div className="card-image is-flex has-text-centered">
-                    <figure className="image" style={{ width: '240px', height: '300px' }}>
-                      <img
-                        src={book.cover}
-                        alt="Cover Book"
-                      />
-                    </figure>
-                  </div>
-                  <div className="card-content">
-                    <p className="title is-6">{book.title}</p>
-                    {/* <p className="subtitle is-6">{book.author}</p>
-                    <p>{book.book_status}</p> */}
+                <Link to={`/books/detail/${book.id}`}>
+                  <div className="card" style={{ height: '400px', width: '240px' }}>
+                    <div className="card-image is-flex has-text-centered">
+                      <figure className="image" style={{ width: '240px', height: '300px' }}>
+                        <img
+                          src={book.cover}
+                          alt="Cover Book"
+                          style={{ width: '240px', height: '300px' }}
+                        />
+                      </figure>
                     </div>
-                </div>
+                    <div className="card-content">
+                      <p className="title is-6">{book.title}</p>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))}
           </div>
-          </>
+        </>
       ) : (
         <>
           <div className="is-flex is-justify-content-space-between">
-            {user && user.role !== "anggota" && (
-              <div className="mb-2">
-                <Link to="/books/add" className="button is-primary">
-                  Add New
-                </Link>
-              </div>
-            )}
+            <div className="mb-2">
+              <Link to="/books/add" className="button is-primary">
+                Add New
+              </Link>
+            </div>
 
             <div className="is-flex is-align-items-center mb-2 mr-5">
               <div className="panel-block">
@@ -140,22 +137,18 @@ const BookList = () => {
                       >
                         Borrow
                       </Link>
-                      {user && user.role !== "anggota" && (
-                        <>
-                          <Link
-                            to={`/books/edit/${book.id}`}
-                            className="button is-small is-warning mr-1"
-                          >
-                            Edit
-                          </Link>
-                          <Link
-                            to={`/books/delete/${book.id}`}
-                            className="button is-small is-danger"
-                          >
-                            Delete
-                          </Link>
-                        </>
-                      )}
+                      <Link
+                        to={`/books/edit/${book.id}`}
+                        className="button is-small is-warning mr-1"
+                      >
+                        Edit
+                      </Link>
+                      <Link
+                        to={`/books/delete/${book.id}`}
+                        className="button is-small is-danger"
+                      >
+                        Delete
+                      </Link>
                     </div>
                   </td>
                 </tr>

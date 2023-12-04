@@ -18,7 +18,7 @@ const Applicants = () => {
         if (isError) {
             navigate("/");
         }
-        if (user && user.role !== "developer" && user.role !== "admin") {
+        if (user && user.role !== "Developer" && user.role !== "Admin") {
             navigate("/profile");
         }
     }, [isError, user, navigate]);

@@ -19,7 +19,7 @@ const BorrowingBook = () => {
       navigate("/");
     }
 
-    if (user && user.role !== "developer" && user.role !== "pustakawan") {
+    if (user && user.role !== "Developer" && user.role !== "Librarian") {
       navigate("/profile");
     }
   }, [isError, user, navigate]);

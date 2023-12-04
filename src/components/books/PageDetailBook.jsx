@@ -52,7 +52,7 @@ const PageDetailBook = () => {
                         <div>
                             <div className="field" style={{ width: '60vh' }}>
                                 <figure className="image">
-                                    <img width="110" height="138" src={cover} alt="cover book" />
+                                    <img width="110" height="138" src={cover} alt="cover book" style={{height: '65vh'}}/>
                                 </figure>
                             </div>
                         </div>
@@ -114,7 +114,7 @@ const PageDetailBook = () => {
                                 </label>
                             </div>
                             <div className="field " style={{ marginTop: '1vh' }}>
-                                {user && user.role === "anggota" && (
+                                {user && user.role === "Member" && (
                                     <>
                                         <div className="control">
                                             <Link to={`/books/borrowing/${id}`} className="button is-success mr-1">
@@ -126,7 +126,7 @@ const PageDetailBook = () => {
                                         </div>
                                     </>
                                 )}
-                                {user && user.role !== "anggota" && (
+                                {user && user.role !== "Member" && (
                                     <div className="control">
                                         <Link to="/books" className="button is-info">
                                             Close
