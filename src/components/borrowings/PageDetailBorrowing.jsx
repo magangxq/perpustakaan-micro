@@ -6,10 +6,9 @@ import API from "../../utils/api";
 const PageDetailBorrowing = () => {
     const [code, setCode] = useState("");
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
-    const [publisher, setPublisher] = useState("");
-    const [publication, setPublication] = useState("");
-    const [description, setDescription] = useState("");
+    const [name, setName] = useState("");
+    const [borrowDate, setBorrowDate] = useState("");
+    const [returnedDate, setReturnedDate] = useState("");
     const [status, setStatus] = useState("");
     const [msg, setMsg] = useState("");
     const { id } = useParams();
@@ -21,12 +20,11 @@ const PageDetailBorrowing = () => {
                     `${API.DETAIL_BORROWING_URL}${id}`
                 );
                 setCode(response.data.code);
-                setTitle(response.data.title);
-                setAuthor(response.data.author);
-                setPublisher(response.data.publisher);
-                setPublication(response.data.publication_year);
-                setDescription(response.data.description);
-                setStatus(response.data.book_status);
+                setTitle(response.data.bookId.title);
+                setName(response.data.userId.nama);
+                setBorrowDate(response.data.borrow_date);
+                setReturnedDate(response.data.returned_date);
+                setStatus(response.data.borrowing_status);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
@@ -55,7 +53,7 @@ const PageDetailBorrowing = () => {
                         </div>
                         <div className="field">
                             <label className="label">
-                                Title: &nbsp;
+                                Book Title: &nbsp;
                                 <label className="has-text-weight-semibold">
                                     {title}
                                 </label>
@@ -63,41 +61,33 @@ const PageDetailBorrowing = () => {
                         </div>
                         <div className="field">
                             <label className="label">
-                                Author: &nbsp;
+                                Borrower Name: &nbsp;
                                 <label className="has-text-weight-semibold">
-                                    {author}
+                                    {name}
                                 </label>
                             </label>
                         </div>
                         <div className="field">
                             <label className="label">
-                                Publisher: &nbsp;
-                                <label className="has-text-weight-semibold">
-                                    {publisher}
-                                </label>
-                            </label>
-                        </div>
-                        <div className="field">
-                            <label className="label">
-                                Publication Year: &nbsp;
-                                <label className="has-text-weight-semibold">
-                                    {publication}
-                                </label>
-                            </label>
-                        </div>
-                        <div className="field">
-                            <label className="label">
-                                Description: &nbsp;
-                                <label className="has-text-weight-semibold">
-                                    {description}
-                                </label>
-                            </label>
-                        </div>
-                        <div className="field">
-                            <label className="label">
-                                Current Status Of The Book: &nbsp;
+                                Book Status: &nbsp;
                                 <label className="has-text-weight-semibold">
                                     {status}
+                                </label>
+                            </label>
+                        </div>
+                        <div className="field">
+                            <label className="label">
+                                Borrow Date: &nbsp;
+                                <label className="has-text-weight-semibold">
+                                    {borrowDate}
+                                </label>
+                            </label>
+                        </div>
+                        <div className="field">
+                            <label className="label">
+                                Returned Date: &nbsp;
+                                <label className="has-text-weight-semibold">
+                                    {returnedDate}
                                 </label>
                             </label>
                         </div>
