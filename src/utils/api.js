@@ -13,12 +13,19 @@ export const EDIT_BOOK_URL = `${BASE_URL}/books/`;
 export const DELETE_BOOK_URL = `${BASE_URL}/books/`;
 export const LIST_APPLICANT_URL = `${BASE_URL}/member-applicant`;
 export const DETAIL_APPLICANT_URL = `${BASE_URL}/member-applicant/`;
+export const LIST_REJECTED_URL = `${BASE_URL}/member-applicant-rejected`;
+export const DETAIL_REJECTED_URL = `${BASE_URL}/member-applicant-rejected/`;
 export const EDIT_APPLICANT_URL = `${BASE_URL}/member-applicant/`;
-export const LIST_BORROWING_URL = `${BASE_URL}/borrowing-book`;
-export const DETAIL_BORROWING_URL = `${BASE_URL}/borrowing-book/`;
+export const LIST_BORROWING_URL = `${BASE_URL}/borrow`;
+export const DETAIL_BORROWING_URL = `${BASE_URL}/borrow/`;
+export const LIST_BORROWING_RETURNED_URL = `${BASE_URL}/borrow-returned`;
+export const DETAIL_BORROWING_RETURNED_URL = `${BASE_URL}/borrow-returned/`;
 export const LIST_USERS_URL = `${BASE_URL}/member-list/users`;
 export const DETAIL_USERS_URL = `${BASE_URL}/member-list/users/`;
 export const EDIT_USERS_URL = `${BASE_URL}/member-list/update-role/`;
+export const BORROWING_BOOK_URL = `${BASE_URL}/borrow`; 
+export const HISTORY_LIST_URL = `${BASE_URL}/history`; 
+export const RETURNED_BOOK_URL = `${BASE_URL}/return-book/`; 
 
 const API = {
     // Auth
@@ -35,13 +42,21 @@ const API = {
     DETAIL_BOOK_URL,
     EDIT_BOOK_URL,
     DELETE_BOOK_URL,
+    BORROWING_BOOK_URL,
+    // History
+    HISTORY_LIST_URL,
     // Applicants
     LIST_APPLICANT_URL,
     DETAIL_APPLICANT_URL,
+    LIST_REJECTED_URL,
+    DETAIL_REJECTED_URL,
     EDIT_APPLICANT_URL,
     // Borrowings
     LIST_BORROWING_URL,
     DETAIL_BORROWING_URL,
+    LIST_BORROWING_RETURNED_URL,
+    DETAIL_BORROWING_RETURNED_URL,
+    RETURNED_BOOK_URL,
     // Users
     LIST_USERS_URL,
     DETAIL_USERS_URL,
