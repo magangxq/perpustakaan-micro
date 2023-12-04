@@ -62,9 +62,9 @@ const FormEditApplicant = () => {
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
                     >
-                      <option value="menunggu-verifikasi">Menunggu Verifikasi</option>
-                      <option value="diterima">Terima</option>
-                      <option value="ditolak">Tolak</option>
+                      <option value="waiting-verification">Waiting Verification</option>
+                      <option value="Verified">Verified</option>
+                      <option value="Rejected">Rejected</option>
                     </select>
                   </div>
                 </div>

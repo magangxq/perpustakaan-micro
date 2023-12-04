@@ -24,7 +24,7 @@ const Userlist = () => {
     return titleMatch && roleMatch;
   });
 
-  const roleOptions = ["all", "developer", "admin", "pustakawan", "anggota"]
+  const roleOptions = ["all", "Developer", "Admin", "Librarian", "Member"]
 
   return (
     <div>
