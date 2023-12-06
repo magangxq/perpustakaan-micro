@@ -50,8 +50,8 @@ const PageReturnedBook = () => {
 
     return (
         <div>
-            <h1 className="title">Borrowing Books</h1>
-            <h2 className="subtitle">Detail Borrowing Book <label>{title}</label></h2>
+            <h1 className="title">Returned Books</h1>
+            <h2 className="subtitle">Returned Book <label>{title}</label></h2>
             <div className="card is-shadowless">
                 <div className="card-content">
                     <div className="content">

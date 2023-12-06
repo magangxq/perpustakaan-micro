@@ -36,8 +36,8 @@ const PageDetailRejected = () => {
 
     return (
         <div>
-            <h1 className="title">Applicants</h1>
-            <h2 className="subtitle">Detail Applicant <label>{name}</label></h2>
+            <h1 className="title">Member Applicant Rejected</h1>
+            <h2 className="subtitle">Detail Member Applicant Rejected <label>{name}</label></h2>
             <div className="card is-shadowless">
                 <div className="card-content">
                     <div className="content">
