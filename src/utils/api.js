@@ -6,6 +6,7 @@ export const LOGOUT_URL = `${BASE_URL}/auth/logout`;
 export const PROFILE_URL = `${BASE_URL}/user/profile`;
 export const EDIT_PROFILE_URL = `${BASE_URL}/user/edit-profile/`;
 export const UPLOAD_PROFILE_URL = `${BASE_URL}/user/upload-picture`;
+export const EDIT_REGISTRATION_URL = `${BASE_URL}/user/edit-registration/`;
 export const LIST_BOOK_URL = `${BASE_URL}/books`;
 export const ADD_BOOK_URL = `${BASE_URL}/books`;
 export const DETAIL_BOOK_URL = `${BASE_URL}/books/`;
@@ -36,6 +37,7 @@ const API = {
     PROFILE_URL,
     EDIT_PROFILE_URL,
     UPLOAD_PROFILE_URL,
+    EDIT_REGISTRATION_URL,
     // Books
     LIST_BOOK_URL,
     ADD_BOOK_URL,

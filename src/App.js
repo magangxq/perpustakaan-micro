@@ -25,6 +25,7 @@ import DetailRejected from "./pages/applicants/DetailRejected";
 import ReturnedBook from "./pages/borrowings/ReturnBook";
 import BorrowingReturned from "./pages/borrowings/BorrowingReturned";
 import DetailBorrowingReturned from "./pages/borrowings/DetailBorrowingReturned";
+import EditRegistration from "./pages/profile/EditRegistration";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/profile/upload-profile" element={<UploadProfile />} />
+          <Route path="/profile/edit-registration" element={<EditRegistration />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
           <Route path="/books/edit/:id" element={<EditBook />} />

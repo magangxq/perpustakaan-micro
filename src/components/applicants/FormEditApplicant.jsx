@@ -5,7 +5,11 @@ import API from "../../utils/api";
 
 const FormEditApplicant = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [niknis, setNiknis] = useState("");
   const [status, setStatus] = useState("");
+  const [rejectedReason, setRejectedReason] = useState("");
+  const [rejectedError, setRejectedError] = useState("");
   const [msg, setMsg] = useState("");
   const [isMutating, setIsMutating] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +21,11 @@ const FormEditApplicant = () => {
         const response = await axios.get(`${API.DETAIL_APPLICANT_URL}${id}`);
         setName(response.data.name);
         setStatus(response.data.registration_status);
+        setEmail(response.data.email);
+        setNiknis(response.data.nik_nis);
+        if (response.data.registration_status === "Rejected") {
+          setRejectedReason(response.data.rejected_reason || "");
+        }
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -28,10 +37,17 @@ const FormEditApplicant = () => {
 
   const updateApplicant = async (e) => {
     e.preventDefault();
+
+    if (!rejectedReason) {
+      setRejectedError("Reason for Rejection is required")
+      return;
+    }
+
     setIsMutating(true);
     try {
       await axios.patch(`${API.EDIT_APPLICANT_URL}${id}`, {
         registration_status: status,
+        information: rejectedReason,
       });
       navigate("/applicants");
     } catch (error) {
@@ -52,15 +68,45 @@ const FormEditApplicant = () => {
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
+            <div className="field">
+              <label className="label">
+                Name: &nbsp;
+                <label className="has-text-weight-semibold">
+                  {name}
+                </label>
+              </label>
+            </div>
+            <div className="field">
+              <label className="label">
+                Email: &nbsp;
+                <label className="has-text-weight-semibold">
+                  {email}
+                </label>
+              </label>
+            </div>
+            <div className="field">
+              <label className="label">
+                NIK/NIS: &nbsp;
+                <label className="has-text-weight-semibold">
+                  {niknis}
+                </label>
+              </label>
+            </div>
+
             <form onSubmit={updateApplicant}>
               <p className="has-text-centered">{msg}</p>
               <div className="field">
-                <label className="label">Role</label>
+                <label className="label">Registration Status</label>
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select
                       value={status}
-                      onChange={(e) => setStatus(e.target.value)}
+                      onChange={(e) => {
+                        setStatus(e.target.value)
+                        if (e.target.value !== "Rejected") {
+                          setRejectedReason("");
+                        }
+                      }}
                     >
                       <option value="waiting-verification">Waiting Verification</option>
                       <option value="Verified">Verified</option>
@@ -69,6 +115,26 @@ const FormEditApplicant = () => {
                   </div>
                 </div>
               </div>
+              {status === "Rejected" && (
+                <div className="field">
+                  <label className="label">Reason for Rejection</label>
+                  <div className="control">
+                    <div className="select is-fullwidth">
+                      <select
+                        value={rejectedReason}
+                        onChange={(e) => setRejectedReason(e.target.value)}
+                        required
+                      >
+                        <option value=""></option>
+                        <option value="Name is wrong">Name is wrong</option>
+                        <option value="Email is wrong">Email is wrong</option>
+                        <option value="NIK/NIS is wrong">NIK/NIS is wrong</option>
+                      </select>
+                    </div>
+                  </div>
+                  <p className="has-text-centered has-text-danger">{rejectedError}</p>
+                </div>
+              )}
               <div className="field">
                 <div className="control">
                   {!isMutating ? (

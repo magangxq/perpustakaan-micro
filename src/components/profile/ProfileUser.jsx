@@ -77,8 +77,8 @@ const ProfileUser = () => {
                       {user && user.registration_status}
                     </label></label>
                   </div>
-                  <div className="field mt-5">
-                    <label className="has-text-weight-semibold is-flex is-justify-content-center">
+                  <div className="field is-flex is-justify-content-center mt-5">
+                    <label className="label has-text-danger has-text-weight-semibold is-flex is-justify-content-center has-text-centered">
                       Your Account Is Still In The Verification Stage,<br />Wait Until The Admin Approves Your Registration Request
                     </label>
                   </div>
@@ -96,6 +96,19 @@ const ProfileUser = () => {
                       {user && user.information}
                     </label></label>
                   </div>
+                  <div className="field">
+                    <label className="label has-text-danger has-text-weight-semibold is-flex is-justify-content-center has-text-centered">
+                    Your Account Was Rejected Because The Data <br /> You Submitted Was Incorrect,<br />Please Edit Your Registration On The Edit Registration Button
+                    </label>
+                  </div>
+                  <div className="is-flex is-justify-content-center">
+                  <Link
+                    to={`/profile/edit-registration`}
+                    className="button is-info mt-1"
+                  >
+                    Edit Registration
+                  </Link>
+                </div>
                 </>
               )}
               {user && user.registration_status === "Verified" && (
