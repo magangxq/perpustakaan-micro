@@ -17,6 +17,7 @@ const FormBorrowingBook = () => {
     const [publisher, setPublisher] = useState("");
     const [publication, setPublication] = useState("");
     const [description, setDescription] = useState("");
+    const [status, setStatus] = useState("");
     const [isMutating, setIsMutating] = useState(false);
     const [msg, setMsg] = useState("");
     const maxDate = moment().add(7, 'days').toDate();
@@ -36,6 +37,7 @@ const FormBorrowingBook = () => {
                 setPublisher(response.data.publisher);
                 setPublication(response.data.publication_year);
                 setDescription(response.data.description);
+                setStatus(response.data.book_status);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
@@ -46,12 +48,12 @@ const FormBorrowingBook = () => {
     }, [id]);
 
     const borrowingBook = async (bookId) => {
-        
-        if(!dueDate) {
+
+        if (!dueDate) {
             setDateError("Due Date is required")
             return;
         }
-        
+
         setIsMutating(true)
         try {
             await axios.post(API.BORROWING_BOOK_URL, {
@@ -133,31 +135,43 @@ const FormBorrowingBook = () => {
                                     </label>
                                 </label>
                             </div>
+                            <div className="field">
+                                <label className="label">
+                                    Current Status Of The Book: &nbsp;
+                                    <label className="has-text-weight-semibold">
+                                        {status}
+                                    </label>
+                                </label>
+                            </div>
                         </div>
                         <div className="mx-1 mt-2" style={{ width: '28vh' }}>
                             <div className="has-text-centered">
                                 {!isMutating ? (
                                     <>
-                                    <p className="has-text-centered has-text-danger">{dateError}</p>
-                                        <div className="panel-block">
-                                            <div className="control has-icons-right my-2">
-                                                <DatePicker
-                                                    selected={dueDate}
-                                                    onChange={date => setDueDate(date)}
-                                                    dateFormat="yyyy-MM-dd"
-                                                    className="form-control py-2"
-                                                    minDate={new Date()}
-                                                    maxDate={maxDate}
-                                                    placeholderText="Select due date"
-                                                />
-                                                <span className="icon is-small is-right">
-                                                    <IoCalendar />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <button onClick={borrowingBook} type="submit" className="button is-success is-fullwidth ms-2 mb-2">
-                                            Borrow
-                                        </button>
+                                        <p className="has-text-centered has-text-danger">{dateError}</p>
+                                        {status !== "Borrowed" && (
+                                            <>
+                                                <div className="panel-block">
+                                                    <div className="control has-icons-right my-2">
+                                                        <DatePicker
+                                                            selected={dueDate}
+                                                            onChange={date => setDueDate(date)}
+                                                            dateFormat="yyyy-MM-dd"
+                                                            className="form-control py-2"
+                                                            minDate={new Date()}
+                                                            maxDate={maxDate}
+                                                            placeholderText="Select due date"
+                                                        />
+                                                        <span className="icon is-small is-right">
+                                                            <IoCalendar />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <button onClick={borrowingBook} type="submit" className="button is-success is-fullwidth ms-2 mb-2">
+                                                    Borrow
+                                                </button>
+                                            </>
+                                        )}
                                     </>
                                 ) : (
                                     <button type="submit" className="button is-success is-fullwidth ms-2 mb-2">

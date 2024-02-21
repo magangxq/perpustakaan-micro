@@ -31,51 +31,7 @@ const BookList = () => {
     <div>
       <h1 className="title">Books</h1>
       <h2 className="subtitle">List of Books</h2>
-      {user && user.role === "Member" ? (
-        <>
-          <div className="is-flex is-justify-content-space-between is-align-items-center">
-            <div className="is-flex is-align-items-center mb-2 mr-5">
-              <div className="panel-block">
-                <p className="control has-icons-left">
-                  <input
-                    className="input"
-                    type="search"
-                    placeholder="Filter by Title"
-                    value={filterBook}
-                    onChange={(e) => setFilterBook(e.target.value)}
-                  />
-                  <span className="icon is-left">
-                    <IoSearch />
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="columns is-multiline is-2">
-            {filteredBooks.map((book) => (
-              <div key={book.id} className="column is-one-fourth">
-                <Link to={`/books/detail/${book.id}`}>
-                  <div className="card" style={{ height: '400px', width: '240px' }}>
-                    <div className="card-image is-flex has-text-centered">
-                      <figure className="image" style={{ width: '240px', height: '300px' }}>
-                        <img
-                          src={book.cover}
-                          alt="Cover Book"
-                          style={{ width: '240px', height: '300px' }}
-                        />
-                      </figure>
-                    </div>
-                    <div className="card-content">
-                      <p className="title is-6">{book.title}</p>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
+      {user && user.role !== "Member" ? (
         <>
           <div className="is-flex is-justify-content-space-between">
             <div className="mb-2">
@@ -155,6 +111,50 @@ const BookList = () => {
               ))}
             </tbody>
           </table>
+        </>
+      ) : (
+        <>
+          <div className="is-flex is-justify-content-space-between is-align-items-center">
+            <div className="is-flex is-align-items-center mb-2 mr-5">
+              <div className="panel-block">
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="search"
+                    placeholder="Filter by Title"
+                    value={filterBook}
+                    onChange={(e) => setFilterBook(e.target.value)}
+                  />
+                  <span className="icon is-left">
+                    <IoSearch />
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="columns is-multiline is-2 is-vcentered">
+            {filteredBooks.map((book) => (
+              <div key={book.id} className="column is-one-fourth">
+                <Link to={`/books/detail/${book.id}`}>
+                  <div className="card" style={{ height: '400px', width: '240px', margin: 'auto' }}>
+                    <div className="card-image is-flex has-text-centered">
+                      <figure className="image" style={{ width: '240px', height: '300px' }}>
+                        <img
+                          src={book.cover}
+                          alt="Cover Book"
+                          style={{ width: '240px', height: '300px' }}
+                        />
+                      </figure>
+                    </div>
+                    <div className="card-content">
+                      <p className="title is-6">{book.title}</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </>
       )}
     </div>

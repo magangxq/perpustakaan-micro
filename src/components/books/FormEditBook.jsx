@@ -125,6 +125,7 @@ const FormEditBook = () => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Book Title"
+                    required
                   />
                 </div>
                 {titleError && <p className="has-text-centered has-text-danger">{titleError}</p>}
@@ -138,6 +139,7 @@ const FormEditBook = () => {
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
                     placeholder="Author"
+                    required
                   />
                 </div>
                 {authorError && <p className="has-text-centered has-text-danger">{authorError}</p>}
@@ -151,6 +153,7 @@ const FormEditBook = () => {
                     value={publisher}
                     onChange={(e) => setPublisher(e.target.value)}
                     placeholder="Publisher"
+                    required
                   />
                 </div>
                 {publisherError && <p className="has-text-centered has-text-danger">{publisherError}</p>}
@@ -164,6 +167,7 @@ const FormEditBook = () => {
                     value={publication}
                     onChange={(e) => setPublication(e.target.value)}
                     placeholder="Publication"
+                    required
                   />
                 </div>
                 {publicationError && <p className="has-text-centered has-text-danger">{publicationError}</p>}
@@ -180,6 +184,7 @@ const FormEditBook = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Description"
+                    required
                   />
                 </div>
                 {descriptionError && <p className="has-text-centered has-text-danger">{descriptionError}</p>}

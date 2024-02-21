@@ -117,9 +117,11 @@ const PageDetailBook = () => {
                                 {user && user.role === "Member" && (
                                     <>
                                         <div className="control">
-                                            <Link to={`/books/borrowing/${id}`} className="button is-success mr-1">
+                                            {status !== "Borrowed" && (
+                                                <Link to={`/books/borrowing/${id}`} className="button is-success mr-1">
                                                 Borrow
                                             </Link>
+                                            )}
                                             <Link to="/books" className="button is-danger">
                                                 Close
                                             </Link>
