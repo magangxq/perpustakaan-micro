@@ -1,6 +1,6 @@
 import User from "../models/UserModel.js";
 import argon2 from "argon2";
-import { Op } from 'sequelize';
+import { ConnectionTimedOutError, Op } from 'sequelize';
 
 export const Login = async (req, res) =>{
     const user = await User.findOne({
@@ -59,3 +59,4 @@ export const logOut = (req, res) =>{
         res.status(200).send("You have been Logout..");
     });
 }
+
